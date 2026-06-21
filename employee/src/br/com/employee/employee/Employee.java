@@ -17,7 +17,7 @@ public class Employee {
     private String employeeCpfNumber;
     private Jobe_Title jobe_title;
     private double employeeSalary;
-    private boolean is_active;
+    private String is_Active;
 
 
 

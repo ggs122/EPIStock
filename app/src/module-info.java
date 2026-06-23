@@ -1,7 +1,9 @@
-
+import br.com.employeInterface.employeeInterface.EmployeeInterface;
 
 module app {
 
-    requires employeeInterface; requires employee;
+    requires employeeInterface;
+
+    uses EmployeeInterface;
 
 }

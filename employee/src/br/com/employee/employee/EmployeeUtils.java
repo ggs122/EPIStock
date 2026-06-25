@@ -28,4 +28,36 @@ public final class EmployeeUtils {
         };
     }
 
+    public static String returIdDefault(String id) {
+        String idIntern = "";
+       boolean isId = id.trim().matches("^\\d{2}\\.\\d{3}\\.\\d{3}-\\d{1}?");
+       if (isId) {
+           idIntern = id;
+       } else {
+           IO.println("------------------------------");
+           IO.println("Número de identidade inválido");
+           idIntern = "Inválido";
+           IO.println("------------------------------");
+       }
+       return idIntern;
+    }
+
+    public static String returnCpfDefault(String cpf) {
+        String cpfIntern = "";
+       boolean isCpf = cpf.trim().matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}?");
+       if (isCpf) {
+           cpfIntern = cpf;
+       } else {
+           IO.println("----------------------");
+           IO.println("Número de CPF inválido");
+           cpfIntern = "Inválido";
+           IO.println("----------------------");
+       }
+       return cpfIntern;
+    }
+
+//    static void main(String[] args) {
+//        System.out.println(returnCpfDefault("102.286.867-50"));
+//    }
+
 }

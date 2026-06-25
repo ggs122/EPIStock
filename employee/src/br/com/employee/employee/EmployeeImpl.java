@@ -2,7 +2,9 @@ package br.com.employee.employee;
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +31,11 @@ public class EmployeeImpl implements EmployeeInterface {
     private double employeeSalary;
     private Status is_Active;
 
+    private Locale localeBr = Locale.forLanguageTag("pt-BR");
+    private final String currency = "BRL";
+    private NumberFormat numberFormat;
+    private String newSalaryFormated;
+
     private EmployeeImpl(long employeeId, long employeeEnrollmentNumber, String employeeFirstName, String employeeMiddleName, String employeeLastname, String employeeIdNumber, String employeeCpfNumber, Jobe_Title jobe_title, double employeeSalary, Status is_Active) {
         this.employeeId = employeeId;
         this.employeeEnrollmentNumber = employeeEnrollmentNumber;
@@ -40,6 +47,9 @@ public class EmployeeImpl implements EmployeeInterface {
         this.jobe_title = jobe_title;
         this.employeeSalary = employeeSalary;
         this.is_Active = is_Active;
+        this.numberFormat = NumberFormat.getCurrencyInstance();
+        this.numberFormat.setCurrency(Currency.getInstance(currency));
+        this.newSalaryFormated = numberFormat.format(employeeSalary);
     }
 
     public EmployeeImpl() {}
@@ -52,7 +62,7 @@ public class EmployeeImpl implements EmployeeInterface {
 
     @Override
     public void createEmployee (String employeeFirstName, String employeeMiddleName, String employeeLastname, String employeeIdNumber, String employeeCpfNumber, int chooseJobe_title, double employeeSalary, int chooseIs_Active) {
-        EmployeeImpl employee = new EmployeeImpl(employeeIdStatic++,employeeEnrollmentNumberStatic++, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, EmployeeUtils.returnJoble_Title(chooseJobe_title), employeeSalary, EmployeeUtils.returnStatus(chooseIs_Active));
+        EmployeeImpl employee = new EmployeeImpl(employeeIdStatic++,employeeEnrollmentNumberStatic++, employeeFirstName, employeeMiddleName, employeeLastname, EmployeeUtils.returIdDefault(employeeIdNumber), EmployeeUtils.returnCpfDefault(employeeCpfNumber), EmployeeUtils.returnJoble_Title(chooseJobe_title), employeeSalary, EmployeeUtils.returnStatus(chooseIs_Active));
         employeeList.add(employee);
     }
 
@@ -67,7 +77,6 @@ public class EmployeeImpl implements EmployeeInterface {
 
     @Override
     public String toString() {
-        Locale localeBr = Locale.forLanguageTag("pt-BR");
-        return String.format(localeBr, "Id: %d | Matrícula %d | Nome: %s %s %-12s | Identidade Nº %-8s | CPF: %s | Cargo: %-12s | Salário: %.2f | Status %s", employeeId, employeeEnrollmentNumber, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, jobe_title, employeeSalary, is_Active);
+        return String.format(localeBr, "Id: %d | Matrícula %d | Nome: %s %s %-12s | Identidade Nº %-12s | CPF: %-15s | Cargo: %-12s | Salário: %s | Status %s", employeeId, employeeEnrollmentNumber, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, jobe_title, newSalaryFormated, is_Active);
     }
 }

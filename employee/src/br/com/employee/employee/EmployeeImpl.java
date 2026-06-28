@@ -5,6 +5,7 @@ import br.com.employeInterface.employeeInterface.EmployeeInterface;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -32,8 +33,6 @@ public class EmployeeImpl implements EmployeeInterface {
     private Jobe_Title jobe_title;
     private double employeeSalary;
     private LocalDate hireDate = LocalDate.of(0001, 01, 01);
-    private LocalDate dateToday = LocalDate.now();
-    private String dateTodayString = dateToday.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     private LocalDate terminationDate = LocalDate.of(0001, 01, 01);
     private Status is_Active;
 
@@ -69,7 +68,7 @@ public class EmployeeImpl implements EmployeeInterface {
     }
 
     @Override
-    public void createEmployee (String employeeFirstName, String employeeMiddleName, String employeeLastname, String employeeIdNumber, String employeeCpfNumber, int chooseJobe_title, double employeeSalary) {
+    public void createEmployee (String employeeFirstName, String employeeMiddleName, String employeeLastname, String employeeIdNumber, String employeeCpfNumber, int chooseJobe_title, double employeeSalary, String hireDate) {
 
       boolean isSimilarFullName = employeeList
                 .stream()
@@ -116,8 +115,61 @@ public class EmployeeImpl implements EmployeeInterface {
             IO.println(String.format(localeBr, "Funcionário: %s %s %s, CPF Nº %s -> já cadastrado anteriormente!", employeeFirstName, employeeMiddleName, employeeLastname, employeeCpfNumber));
             IO.println("-----------------------------------------------------------------------------------");
         } else {
-            EmployeeImpl employee = new EmployeeImpl(employeeIdStatic++,employeeEnrollmentNumberStatic++, employeeFirstName, employeeMiddleName, employeeLastname, EmployeeUtils.returIdDefault(employeeIdNumber), EmployeeUtils.returnCpfDefault(employeeCpfNumber), EmployeeUtils.returnJoble_Title(chooseJobe_title), employeeSalary, dateToday, terminationDate, EmployeeUtils.returnStatus(1));
-          employeeList.add(employee);
+            try {
+                LocalDate localHireDate = LocalDate.parse(hireDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                EmployeeImpl employee = new EmployeeImpl(employeeIdStatic++,employeeEnrollmentNumberStatic++, employeeFirstName, employeeMiddleName, employeeLastname, EmployeeUtils.returIdDefault(employeeIdNumber), EmployeeUtils.returnCpfDefault(employeeCpfNumber), EmployeeUtils.returnJoble_Title(chooseJobe_title), employeeSalary, localHireDate, terminationDate, EmployeeUtils.returnStatus(1));
+                employeeList.add(employee);
+            } catch (DateTimeParseException d) {
+                IO.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+                IO.println(String.format(localeBr, "Data formato inválido! Impossível cadastrar o funcionário: %s %s %s, Identidade Nº %s, CPF Nº %s", employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber));
+                IO.println("Digite uma data válida.");
+                IO.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+        }
+    }
+
+    @Override
+    public void terminationDateEmployee(long employeeEnrollmentNumber, String terminationDateEmployee) {
+
+        try {
+            LocalDate terminationDateEmployeeLocalDate = LocalDate.parse(terminationDateEmployee, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            boolean foundEmployee = employeeList
+                    .stream()
+                    .anyMatch(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber);
+
+            boolean terminationEmployeeLocalDateIsBefore = employeeList
+                    .stream()
+                    .anyMatch(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber && e.hireDate.isBefore(terminationDateEmployeeLocalDate));
+
+
+            if (foundEmployee) {
+
+                if (terminationEmployeeLocalDateIsBefore) {
+
+                    employeeList
+                            .stream()
+                            .filter(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber)
+                            .forEach(e -> {
+                                e.is_Active = Status.Inativo;
+                                e.terminationDate = terminationDateEmployeeLocalDate;
+                            });
+                } else {
+                    IO.println("---------------------------------------------------------------------------------------------");
+                    IO.println(String.format(localeBr, "Data de demissão: %s, Não pode ser anterior a data de admissão!\nPor isso não foi processado a demissão do funcionário.", terminationDateEmployeeLocalDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                    IO.println("---------------------------------------------------------------------------------------------");
+                }
+
+            } else {
+                IO.println("------------------------------------------------------------------------------");
+                IO.println(String.format(localeBr, "Funcionário Matrícula %d -> Não encontrada ou inexistente", employeeEnrollmentNumber));
+                IO.println("------------------------------------------------------------------------------");
+            }
+        } catch (DateTimeParseException d) {
+            IO.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+            IO.println(String.format(localeBr, "Data formato inválido! Impossível cadastrar o funcionário: %s %s %s, Identidade Nº %s, CPF Nº %s", employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber));
+            IO.println("Digite uma data válida.");
+            IO.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 
@@ -133,6 +185,7 @@ public class EmployeeImpl implements EmployeeInterface {
 
     @Override
     public String toString() {
-        return String.format(localeBr, "Id: %d | Matrícula %d | Nome: %-15s %-15s %-15s | Identidade Nº %-12s | CPF: %-15s | Cargo: %-12s | Salário: %s | Admissão: %s | Demissão: %s | Status %s", employeeId, employeeEnrollmentNumber, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, jobe_title, newSalaryFormated, dateTodayString, terminationDate, is_Active);
+
+            return String.format(localeBr, "Id: %d | Matrícula %d | Nome: %-15s %-15s %-15s | Identidade Nº %-12s | CPF: %-15s | Cargo: %-12s | Salário: %s | Admissão: %s | Demissão: %s | Status %s", employeeId, employeeEnrollmentNumber, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, jobe_title, newSalaryFormated, hireDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), terminationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), is_Active);
     }
 }

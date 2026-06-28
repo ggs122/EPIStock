@@ -154,6 +154,7 @@ public class EmployeeImpl implements EmployeeInterface {
                                 e.is_Active = Status.Inativo;
                                 e.terminationDate = terminationDateEmployeeLocalDate;
                             });
+                    System.out.println("Test");
                 } else {
                     IO.println("---------------------------------------------------------------------------------------------");
                     IO.println(String.format(localeBr, "Data de demissão: %s, Não pode ser anterior a data de admissão!\nPor isso não foi processado a demissão do funcionário.", terminationDateEmployeeLocalDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));

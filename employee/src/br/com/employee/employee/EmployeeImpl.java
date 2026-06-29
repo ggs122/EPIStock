@@ -154,7 +154,12 @@ public class EmployeeImpl implements EmployeeInterface {
                                 e.is_Active = Status.Inativo;
                                 e.terminationDate = terminationDateEmployeeLocalDate;
                             });
-                    System.out.println("Test");
+                    IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    employeeList
+                            .stream()
+                            .filter(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber)
+                            .forEach(e -> IO.println(String.format(localeBr, "Funcionário: %s %s %s | Matrícula Nº : %d -> demitido com sucesso", e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.employeeEnrollmentNumber)));
+                    IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 } else {
                     IO.println("---------------------------------------------------------------------------------------------");
                     IO.println(String.format(localeBr, "Data de demissão: %s, Não pode ser anterior a data de admissão!\nPor isso não foi processado a demissão do funcionário.", terminationDateEmployeeLocalDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
@@ -177,10 +182,12 @@ public class EmployeeImpl implements EmployeeInterface {
     @Override
     public void printEmployeeList() {
         if (!employeeList.isEmpty()) {
+            IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> Lista de Funcionários <");
             employeeList
                     .stream()
                     .forEach(e -> IO.println(e));
+            IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 

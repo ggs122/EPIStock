@@ -14,7 +14,7 @@ import java.util.Locale;
 public class EmployeeImpl implements EmployeeInterface {
 
     public enum Jobe_Title {
-        LANTERNAGEM, PINTURA, ESTOFADOR, ELETRICISTA, MECANICO, TEC_REFRI, MANOBRISTA, JATISTA, BORRACHEIRO, ABASTECEDOR, INEXISTENTE
+        LANTERNAGEM, PINTURA, ESTOFADOR, ELETRICISTA, MECANICO, TEC_REFRI, MANOBRISTA, JATISTA, BORRACHEIRO, ABASTECEDOR, INEXISTENTE, GERENTE, GERENTE_R
     }
 
     public enum Status {
@@ -242,6 +242,6 @@ public class EmployeeImpl implements EmployeeInterface {
     @Override
     public String toString() {
 
-            return String.format(localeBr, "Id: %d | Matrícula %d | Nome: %-15s %-15s %-15s | Identidade Nº %-12s | CPF: %-15s | Cargo: %-12s | Salário: %s | Admissão: %s | Demissão: %s | Status %s", employeeId, employeeEnrollmentNumber, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, jobe_title, newSalaryFormated, hireDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), terminationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), is_Active);
+            return String.format(localeBr, "Id: %d | Matrícula %d | Nome: %-15s %-15s %-15s | Identidade Nº %-12s | CPF: %-15s | Cargo: %-12s | Salário: %-15s | Admissão: %s | Demissão: %s | Status %s", employeeId, employeeEnrollmentNumber, employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber, jobe_title, newSalaryFormated, hireDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), terminationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), is_Active);
     }
 }

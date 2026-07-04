@@ -16,6 +16,8 @@ public final class EmployeeUtils {
             case 8 -> EmployeeImpl.Jobe_Title.JATISTA;
             case 9 -> EmployeeImpl.Jobe_Title.BORRACHEIRO;
             case 10 -> EmployeeImpl.Jobe_Title.ABASTECEDOR;
+            case 11 -> EmployeeImpl.Jobe_Title.GERENTE;
+            case 12 -> EmployeeImpl.Jobe_Title.GERENTE_R;
             default -> EmployeeImpl.Jobe_Title.INEXISTENTE;
         };
     }

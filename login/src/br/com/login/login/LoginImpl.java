@@ -10,7 +10,7 @@ import java.util.Locale;
 public class LoginImpl implements LoginInterface {
 
     enum AuthenticationType {
-        LOGIN, LOGIN_MASTER
+        LOGIN, LOGIN_MASTER, INEXISTENTE
     }
 
     private String user;
@@ -20,12 +20,13 @@ public class LoginImpl implements LoginInterface {
     private AuthenticationType authenticationType;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
-    //TODO falta atribuição de AuthenticationType no construtor
-    private LoginImpl(long employeeEnrollmentNumber, String user, String password, String passwordReminder) {
+
+    private LoginImpl(long employeeEnrollmentNumber, String user, String password, String passwordReminder, AuthenticationType authenticationType) {
         this.employeeEnrollmentNumber = employeeEnrollmentNumber;
         this.user = user;
         this.password = password;
         this.passwordReminder = passwordReminder;
+        this.authenticationType = authenticationType;
     }
 
     public LoginImpl() {}
@@ -45,14 +46,20 @@ public class LoginImpl implements LoginInterface {
         return password;
     }
 
-    //TODO falta o método get de aunthenticationType
-
     public String getPasswordReminder() {
         return passwordReminder;
     }
 
+    public AuthenticationType getAuthenticationType() {
+        return authenticationType;
+    }
+
+    public static List<LoginImpl> getLoginList() {
+        return loginList;
+    }
+
     @Override
-    public void createLogin(long employeeEnrollmentNumber, String user, String password, String passwordReminder) {
+    public void createLogin(long employeeEnrollmentNumber, String user, String password, String passwordReminder, int authenticationType) {
 
       boolean isEmployee = employeeList
                 .stream()
@@ -62,7 +69,7 @@ public class LoginImpl implements LoginInterface {
       boolean isPassword = password.matches("[A-Za-z]{1}\\.\\d{6}");
 
       if (isEmployee && isUser && isPassword) {
-          LoginImpl login = new LoginImpl(employeeEnrollmentNumber, user,password, passwordReminder);
+          LoginImpl login = new LoginImpl(employeeEnrollmentNumber, user,password, passwordReminder, LoginUtils.returnAuthenticationType(authenticationType));
           loginList.add(login);
       }
 
@@ -98,13 +105,13 @@ public class LoginImpl implements LoginInterface {
 
             if (isLogin) {
                 if (checkingIsActive(user, password)) {
-                    IO.println("-------------------------------------------------------------------------------------");
+                    IO.println("-------------------------------------------------------------------------------------------------------");
                     IO.println("> Dados do Login <");
                     loginList
                             .stream()
                             .filter(l -> l.user.equals(user) && l.password.equals(password))
                             .forEach(l -> IO.println(l));
-                    IO.println("-------------------------------------------------------------------------------------");
+                    IO.println("------------------------------------------------------------------------------------------------------");
                 } else {
                     IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     IO.println(String.format(localeBr, "O usuário %s, foi demitido da empresa -> Impossível mostrar a senha. Para mostrar essa senha você precisa ser LoginMaster", user));
@@ -122,10 +129,52 @@ public class LoginImpl implements LoginInterface {
         }
     }
 
-    //TODO Falta aunthenticationType no método toString
+    @Override
+    public void changeLogin(String myUser, String myPassword, long otherEmployeeEnrollmentNumber, String oldUserEmployee, String oldPasswordEmployee ,String newUserOtherEmployee, String newPasswordOtherEmployee) {
+        boolean isUser = newUserOtherEmployee.matches("[A-Z]{1}([a-z])+");
+        boolean isPassword = newPasswordOtherEmployee.matches("[A-Za-z]{1}\\.\\d{6}");
+
+       boolean isLogin = loginList
+                .stream()
+                .anyMatch(l -> l.user.equals(myUser) && l.password.equals(myPassword) && l.authenticationType.equals(AuthenticationType.LOGIN_MASTER));
+
+     boolean isOtherEmployee = loginList
+               .stream()
+               .anyMatch(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber && l.user.equals(oldUserEmployee) && l.password.equals(oldPasswordEmployee));
+
+       if (isLogin) {
+           if (isUser && isPassword) {
+               if (isOtherEmployee) {
+                   if (!loginList.isEmpty()) {
+                       loginList
+                               .stream()
+                               .filter(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber)
+                               .forEach(l -> {
+                                   l.user = newUserOtherEmployee;
+                                   l.password = newPasswordOtherEmployee;
+                               });
+
+                   } else {
+                       IO.println("Não há logins cadastrados no sistema -> impossível alterar o login.");
+                   }
+               } else {
+                   IO.println(String.format(localeBr, "Funcionário matrícula: %d -> inexistente", otherEmployeeEnrollmentNumber));
+               }
+           } else {
+               IO.println(String.format(localeBr, "Novo usuário: %s e nova senha: %s -> inválidos!", newUserOtherEmployee, newPasswordOtherEmployee));
+           }
+       } else {
+           IO.println(String.format(localeBr, "Usuário %s e senha %s -> não conferem.", myUser, myPassword));
+       }
+
+    }
+
+    public void showAllLogins(String myUser, String myPassword) {
+
+    }
 
     @Override
     public String toString() {
-        return String.format(localeBr, "Matrícula: %d | Usuário: %s | Senha: %s | Lembrete de Senha: %s", employeeEnrollmentNumber, user, password, passwordReminder);
+        return String.format(localeBr, "Matrícula: %d | Usuário: %s | Senha: %s | Lembrete de Senha: %s | Login Type: %s", employeeEnrollmentNumber, user, password, passwordReminder, authenticationType);
     }
 }

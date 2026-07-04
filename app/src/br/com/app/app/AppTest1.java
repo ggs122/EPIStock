@@ -19,8 +19,10 @@ public class AppTest1 {
         employee1.printEmployeeList();
 
        LoginInterface login1 = ServiceLoader.load(LoginInterface.class).findFirst().orElseThrow();
-       login1.createLogin(1000, "Souza", "S.123456", "Niver");
-       login1.showLogins();
+       login1.createLogin(1000, "Soares", "S.123456", "Niver");
+       login1.createLogin(1001, "Iracilda", "I.654321", "Ir");
+       login1.showLogins("Soares", "S.123456");
+       login1.showLogins("Iracilda", "I.654321");
 
     }
 }

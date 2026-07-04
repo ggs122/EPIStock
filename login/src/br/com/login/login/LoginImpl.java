@@ -169,7 +169,13 @@ public class LoginImpl implements LoginInterface {
 
     }
 
+    //TODO falta implementar
     public void showAllLogins(String myUser, String myPassword) {
+
+    }
+
+    //TODO falta implementar
+    public void showSpecificLogin() {
 
     }
 

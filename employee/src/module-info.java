@@ -6,5 +6,7 @@ module employee {
 
     requires employeeInterface;
 
+    exports br.com.employee.employee;
+
     provides EmployeeInterface with EmployeeImpl;
 }

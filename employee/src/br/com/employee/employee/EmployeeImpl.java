@@ -61,10 +61,58 @@ public class EmployeeImpl implements EmployeeInterface {
 
     public EmployeeImpl() {}
 
-    static List<EmployeeImpl> employeeList = new ArrayList<>();
+   public static List<EmployeeImpl> employeeList = new ArrayList<>();
 
     public static List<EmployeeImpl> getEmployeeList() {
         return employeeList;
+    }
+
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public long getEmployeeEnrollmentNumber() {
+        return employeeEnrollmentNumber;
+    }
+
+    public String getEmployeeFirstName() {
+        return employeeFirstName;
+    }
+
+    public String getEmployeeMiddleName() {
+        return employeeMiddleName;
+    }
+
+    public String getEmployeeLastname() {
+        return employeeLastname;
+    }
+
+    public String getEmployeeIdNumber() {
+        return employeeIdNumber;
+    }
+
+    public String getEmployeeCpfNumber() {
+        return employeeCpfNumber;
+    }
+
+    public Jobe_Title getJobe_title() {
+        return jobe_title;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public double getEmployeeSalary() {
+        return employeeSalary;
+    }
+
+    public LocalDate getTerminationDate() {
+        return terminationDate;
+    }
+
+    public Status getIs_Active() {
+        return is_Active;
     }
 
     @Override

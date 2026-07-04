@@ -2,6 +2,7 @@ package br.com.app.app;
 
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
+import br.com.loginInterface.loginInterface.LoginInterface;
 
 import java.time.LocalDate;
 import java.util.ServiceLoader;
@@ -17,6 +18,9 @@ public class AppTest1 {
         employee1.terminationDateEmployee(1000, "15/05/1991");
         employee1.printEmployeeList();
 
-    }
+       LoginInterface login1 = ServiceLoader.load(LoginInterface.class).findFirst().orElseThrow();
+       login1.createLogin(1000, "Souza", "S.123456", "Niver");
+       login1.showLogins();
 
+    }
 }

@@ -169,13 +169,31 @@ public class LoginImpl implements LoginInterface {
 
     }
 
-    //TODO falta implementar
     public void showAllLogins(String myUser, String myPassword) {
+      boolean isMyLogin = loginList
+                .stream()
+                .anyMatch(l -> l.user.equals(myUser) && l.password.equals(myPassword) && l.authenticationType.equals(LoginUtils.returnAuthenticationType(2)));
 
+      if (isMyLogin) {
+          if (!loginList.isEmpty()) {
+              loginList
+                      .stream()
+                      .forEach(l -> System.out.println(l));
+          } else {
+              IO.println("Logins não cadastrados -> Nada para mostrar.");
+          }
+      } else {
+          IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", myUser, myPassword));
+      }
     }
 
     //TODO falta implementar
-    public void showSpecificLogin() {
+    public void showSpecificLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword) {
+        boolean isMyLogin = loginList
+                .stream()
+                .anyMatch(l -> l.user.equals(myUser) && l.password.equals(myPassword) && l.authenticationType.equals(LoginUtils.returnAuthenticationType(2)));
+
+
 
     }
 

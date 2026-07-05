@@ -187,11 +187,40 @@ public class LoginImpl implements LoginInterface {
       }
     }
 
-    //TODO falta implementar
     public void showSpecificLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword) {
         boolean isMyLogin = loginList
                 .stream()
                 .anyMatch(l -> l.user.equals(myUser) && l.password.equals(myPassword) && l.authenticationType.equals(LoginUtils.returnAuthenticationType(2)));
+      boolean isOtherEmployeeEnrollmentNumber = loginList
+                .stream()
+                .anyMatch(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber);
+
+        if (isMyLogin) {
+            if (isOtherEmployeeEnrollmentNumber) {
+                if (!loginList.isEmpty()) {
+                    IO.println("Login encontrado!");
+                    IO.println();
+                    IO.println("Login:");
+                    loginList
+                            .stream()
+                            .filter(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber)
+                            .forEach(l -> IO.println(l));
+                    IO.println();
+                    IO.println("Funcionário:");
+                    employeeList
+                            .stream()
+                            .filter(e -> e.getEmployeeEnrollmentNumber() == otherEmployeeEnrollmentNumber)
+                            .forEach(e -> IO.println(e));
+
+                } else {
+                    IO.println(String.format(localeBr, "Login da matrícula: %d -> Não encontrado.", otherEmployeeEnrollmentNumber));
+                }
+            } else {
+                IO.println(String.format(localeBr, "Matrícula: %d -> Não encontrada.", otherEmployeeEnrollmentNumber));
+            }
+        } else {
+            IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Inexistente", myUser, myPassword));
+        }
 
 
 

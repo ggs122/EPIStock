@@ -30,5 +30,13 @@ public class AppTest1 {
        login1.changeLogin("Ivanildo", "I.131326", 1001, "Iracilda", "I.654321", "Ira", "I.263263");
        login1.showLogins("Ira", "I.263263");
 
+       login1.showAllLogins("Ivanildo", "I.131326");
+
+       login1.showSpecificLogin(1001, "Ivanildo", "I.131326");
+
+        login1.deleteLogin(1000, "Ivanildo", "I.131326");
+
+       login1.showLogins("Soares", "S.123456");
+
     }
 }

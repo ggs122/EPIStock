@@ -3,9 +3,8 @@ package br.com.login.login;
 import br.com.employee.employee.EmployeeImpl;
 import br.com.loginInterface.loginInterface.LoginInterface;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class LoginImpl implements LoginInterface {
 
@@ -169,6 +168,7 @@ public class LoginImpl implements LoginInterface {
 
     }
 
+    @Override
     public void showAllLogins(String myUser, String myPassword) {
       boolean isMyLogin = loginList
                 .stream()
@@ -176,9 +176,31 @@ public class LoginImpl implements LoginInterface {
 
       if (isMyLogin) {
           if (!loginList.isEmpty()) {
+              IO.println("-------------------------------------------------------------------------------------------------------");
+              IO.println("> Lista de Logins <");
+              IO.println();
+
               loginList
-                      .stream()
-                      .forEach(l -> System.out.println(l));
+                      .forEach(l -> {
+
+                          employeeList
+                                  .stream()
+                                  .filter(e -> e.getEmployeeEnrollmentNumber() == l.employeeEnrollmentNumber)
+                                  .forEach(e -> {
+                                      if (l.employeeEnrollmentNumber == e.getEmployeeEnrollmentNumber()) {
+                                          IO.println("> Funcionário < ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                                          IO.println(e);
+                                          IO.println("> Login < -------------------------------------------------------------------------------------------------------------");
+                                          IO.println(l);
+                                          IO.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                                          IO.println();
+                                      }
+                                  });
+
+
+                      });
+
+              IO.println("-------------------------------------------------------------------------------------------------------");
           } else {
               IO.println("Logins não cadastrados -> Nada para mostrar.");
           }
@@ -187,6 +209,7 @@ public class LoginImpl implements LoginInterface {
       }
     }
 
+    @Override
     public void showSpecificLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword) {
         boolean isMyLogin = loginList
                 .stream()
@@ -198,6 +221,7 @@ public class LoginImpl implements LoginInterface {
         if (isMyLogin) {
             if (isOtherEmployeeEnrollmentNumber) {
                 if (!loginList.isEmpty()) {
+                    IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     IO.println("Login encontrado!");
                     IO.println();
                     IO.println("Login:");
@@ -211,6 +235,7 @@ public class LoginImpl implements LoginInterface {
                             .stream()
                             .filter(e -> e.getEmployeeEnrollmentNumber() == otherEmployeeEnrollmentNumber)
                             .forEach(e -> IO.println(e));
+                    IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 } else {
                     IO.println(String.format(localeBr, "Login da matrícula: %d -> Não encontrado.", otherEmployeeEnrollmentNumber));
@@ -221,13 +246,41 @@ public class LoginImpl implements LoginInterface {
         } else {
             IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Inexistente", myUser, myPassword));
         }
+    }
 
+    //FIXME não está tendo o comportamento de deletar o login. Depois verificar.
+    @Override
+    public void deleteLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword) {
 
+     boolean isLoginMaster  = loginList
+                .stream()
+                .anyMatch(l -> l.user.equals(myUser) && l.password.equals(myPassword) && l.authenticationType.equals(LoginUtils.returnAuthenticationType(2)));
+
+   boolean isOtherEmployeeEnrollmentNumber = loginList
+             .stream()
+             .anyMatch(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber);
+
+     if (isLoginMaster) {
+         if (isOtherEmployeeEnrollmentNumber) {
+             if (!loginList.isEmpty()) {
+
+                 loginList
+                         .removeIf(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber);
+
+             } else {
+                 IO.println("Não existem logins cadastrados no sistema.");
+             }
+         } else {
+             IO.println(String.format(localeBr, "Login da matrícula %s -> Não encontrado.", otherEmployeeEnrollmentNumber));
+         }
+     } else {
+         IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", myUser, myPassword));
+     }
 
     }
 
     @Override
     public String toString() {
-        return String.format(localeBr, "Matrícula: %d | Usuário: %s | Senha: %s | Lembrete de Senha: %s | Login Type: %s", employeeEnrollmentNumber, user, password, passwordReminder, authenticationType);
+        return String.format(localeBr, "Matrícula: %d | Usuário: %-15s | Senha: %s | Lembrete de Senha: %-8s | Login Type: %s", employeeEnrollmentNumber, user, password, passwordReminder, authenticationType);
     }
 }

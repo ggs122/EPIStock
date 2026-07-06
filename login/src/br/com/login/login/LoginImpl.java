@@ -57,6 +57,8 @@ public class LoginImpl implements LoginInterface {
         return loginList;
     }
 
+
+    //TODO implementar método para não ter repetição de login, ou seja, o mesmo login não poderá existir mais de uma vez.
     @Override
     public void createLogin(long employeeEnrollmentNumber, String user, String password, String passwordReminder, int authenticationType) {
 

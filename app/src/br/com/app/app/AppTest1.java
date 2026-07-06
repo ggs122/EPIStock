@@ -36,7 +36,7 @@ public class AppTest1 {
 
         login1.deleteLogin(1000, "Ivanildo", "I.131326");
 
-       login1.showLogins("Soares", "S.123456");
+        login1.showAllLogins("Ivanildo", "I.131326");
 
     }
 }

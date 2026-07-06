@@ -248,7 +248,7 @@ public class LoginImpl implements LoginInterface {
         }
     }
 
-    //FIXME não está tendo o comportamento de deletar o login. Depois verificar.
+
     @Override
     public void deleteLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword) {
 
@@ -264,8 +264,18 @@ public class LoginImpl implements LoginInterface {
          if (isOtherEmployeeEnrollmentNumber) {
              if (!loginList.isEmpty()) {
 
-                 loginList
+               boolean wasDeleted = loginList
                          .removeIf(l -> l.employeeEnrollmentNumber == otherEmployeeEnrollmentNumber);
+
+               if (wasDeleted) {
+                   IO.println("------------------------------------------------------------------------------");
+                   IO.println(String.format(localeBr, "Login -> Matrícula: %d -> deletado com sucesso!", otherEmployeeEnrollmentNumber));
+                   IO.println("------------------------------------------------------------------------------");
+               } else {
+                   IO.println("----------------------------------------------------------------------------------------");
+                   IO.println(String.format(localeBr, "Impossível localizar a matricula: %d, impossível deletar", otherEmployeeEnrollmentNumber));
+                   IO.println("----------------------------------------------------------------------------------------");
+               }
 
              } else {
                  IO.println("Não existem logins cadastrados no sistema.");

@@ -24,6 +24,7 @@ public class AppTest1 {
        login1.createLogin(1000, "Soares", "S.123456", "Niver", 1);
        login1.createLogin(1001, "Iracilda", "I.654321", "Ir", 1);
        login1.createLogin(1003, "Ivanildo", "I.131326", "Pt", 2);
+        login1.createLogin(1003, "Ivanildo", "I.131326", "Pt", 2);
        login1.showLogins("Soares", "S.123456");
        login1.showLogins("Iracilda", "I.654321");
        login1.showLogins("Ivanildo", "I.131326");

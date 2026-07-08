@@ -57,8 +57,6 @@ public class LoginImpl implements LoginInterface {
         return loginList;
     }
 
-
-    //TODO implementar método para não ter repetição de login, ou seja, o mesmo login não poderá existir mais de uma vez.
     @Override
     public void createLogin(long employeeEnrollmentNumber, String user, String password, String passwordReminder, int authenticationType) {
 
@@ -69,9 +67,29 @@ public class LoginImpl implements LoginInterface {
       boolean isUser = user.matches("[A-Z]{1}([a-z])+");
       boolean isPassword = password.matches("[A-Za-z]{1}\\.\\d{6}");
 
-      if (isEmployee && isUser && isPassword) {
-          LoginImpl login = new LoginImpl(employeeEnrollmentNumber, user,password, passwordReminder, LoginUtils.returnAuthenticationType(authenticationType));
-          loginList.add(login);
+    boolean isLogin = loginList
+              .stream()
+              .anyMatch(l -> l.user.equals(user) && l.password.equals(password) && l.passwordReminder.equals(passwordReminder) && l.authenticationType.equals(LoginUtils.returnAuthenticationType(authenticationType)));
+
+      if (isEmployee) {
+          if (isUser && isPassword) {
+              if (isLogin) {
+                  IO.println("---------------------------------------");
+                  IO.println("Login com usuário e senha já existente.");
+                  IO.println("---------------------------------------");
+              } else {
+                  LoginImpl login = new LoginImpl(employeeEnrollmentNumber, user,password, passwordReminder, LoginUtils.returnAuthenticationType(authenticationType));
+                  loginList.add(login);
+              }
+          } else {
+              IO.println("---------------------------------------------------------------------------------------------");
+              IO.println(String.format(localeBr, "Usuário: %s e Password: %d -> Formato inválido", user, password));
+              IO.println("---------------------------------------------------------------------------------------------");
+          }
+      } else {
+          IO.println("------------------------------------------------------------------------------------------------");
+          IO.println(String.format(localeBr, "Login com a matrícula %s -> inexistente", employeeEnrollmentNumber));
+          IO.println("------------------------------------------------------------------------------------------------");
       }
 
     }

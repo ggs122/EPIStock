@@ -176,6 +176,44 @@ public class EmployeeImpl implements EmployeeInterface {
         }
     }
 
+    //TODO verificar depois e implementar na interface
+    public void findEmployee(int employeeEnrollmentNumber) {
+
+      boolean isEmployee = employeeList
+                .stream()
+                .anyMatch(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
+
+      if (isEmployee) {
+          if (!employeeList.isEmpty()) {
+
+              employeeList
+                      .stream()
+                      .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
+                      .forEach(e -> IO.println(e));
+
+          } else {
+              IO.println("Não há clientes cadastrados no sistema -> Cadastre");
+          }
+      } else {
+          IO.println(String.format(localeBr, "Matrícula %d -> Inexistente!!", employeeEnrollmentNumber));
+      }
+    }
+
+    //TODO verificar depois e implementar na interface
+    public void deleteEmployee(int employeeEnrollmentNumber) {
+
+        if (!employeeList.isEmpty()) {
+            boolean isEmployee = employeeList
+                    .removeIf(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
+
+            if (isEmployee) {
+                IO.println("Funcionário deletado com sucesso!");
+            }
+        } else {
+            IO.println("Não há clientes cadastrados no sistema -> Cadastre");
+        }
+    }
+
     @Override
     public void terminationDateEmployee(long employeeEnrollmentNumber, String terminationDateEmployee) {
 

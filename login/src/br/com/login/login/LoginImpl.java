@@ -174,16 +174,24 @@ public class LoginImpl implements LoginInterface {
                                });
 
                    } else {
+                       IO.println("-------------------------------------------------------------------");
                        IO.println("Não há logins cadastrados no sistema -> impossível alterar o login.");
+                       IO.println("-------------------------------------------------------------------");
                    }
                } else {
+                   IO.println("------------------------------------------------------------------------------------------------------");
                    IO.println(String.format(localeBr, "Funcionário matrícula: %d -> inexistente", otherEmployeeEnrollmentNumber));
+                   IO.println("------------------------------------------------------------------------------------------------------");
                }
            } else {
+               IO.println("------------------------------------------------------------------------------------------------------------------------------");
                IO.println(String.format(localeBr, "Novo usuário: %s e nova senha: %s -> inválidos!", newUserOtherEmployee, newPasswordOtherEmployee));
+               IO.println("------------------------------------------------------------------------------------------------------------------------------");
            }
        } else {
+           IO.println("-----------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Usuário %s e senha %s -> não conferem.", myUser, myPassword));
+           IO.println("-----------------------------------------------------------------------------------------");
        }
 
     }
@@ -222,10 +230,14 @@ public class LoginImpl implements LoginInterface {
 
               IO.println("-------------------------------------------------------------------------------------------------------");
           } else {
+              IO.println("--------------------------------------------");
               IO.println("Logins não cadastrados -> Nada para mostrar.");
+              IO.println("--------------------------------------------");
           }
       } else {
+          IO.println("-------------------------------------------------------------------------------------------");
           IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", myUser, myPassword));
+          IO.println("-------------------------------------------------------------------------------------------");
       }
     }
 
@@ -258,13 +270,19 @@ public class LoginImpl implements LoginInterface {
                     IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 } else {
+                    IO.println("-------------------------------------------------------------------------------------------------------");
                     IO.println(String.format(localeBr, "Login da matrícula: %d -> Não encontrado.", otherEmployeeEnrollmentNumber));
+                    IO.println("-------------------------------------------------------------------------------------------------------");
                 }
             } else {
+                IO.println("----------------------------------------------------------------------------------------------");
                 IO.println(String.format(localeBr, "Matrícula: %d -> Não encontrada.", otherEmployeeEnrollmentNumber));
+                IO.println("----------------------------------------------------------------------------------------------");
             }
         } else {
+            IO.println("----------------------------------------------------------------------------------------------");
             IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Inexistente", myUser, myPassword));
+            IO.println("----------------------------------------------------------------------------------------------");
         }
     }
 
@@ -298,13 +316,19 @@ public class LoginImpl implements LoginInterface {
                }
 
              } else {
+                 IO.println("------------------------------------------");
                  IO.println("Não existem logins cadastrados no sistema.");
+                 IO.println("------------------------------------------");
              }
          } else {
+             IO.println("------------------------------------------------------------------------------------------------------");
              IO.println(String.format(localeBr, "Login da matrícula %s -> Não encontrado.", otherEmployeeEnrollmentNumber));
+             IO.println("------------------------------------------------------------------------------------------------------");
          }
      } else {
+         IO.println("-------------------------------------------------------------------------------------------");
          IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", myUser, myPassword));
+         IO.println("-------------------------------------------------------------------------------------------");
      }
 
     }

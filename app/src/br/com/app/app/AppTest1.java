@@ -45,5 +45,7 @@ public class AppTest1 {
         login1.createLogin(1004, "Rog", "R.366589", "Rog1", 2);
         login1.showAllLogins("Rog", "R.366589");
 
+        login1.rememberLogin("Rog1");
+
     }
 }

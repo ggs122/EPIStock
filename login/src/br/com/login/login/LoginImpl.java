@@ -287,6 +287,32 @@ public class LoginImpl implements LoginInterface {
         }
     }
 
+    @Override
+    public void rememberLogin(String passwordReminder) {
+      boolean isLogin = loginList
+                .stream()
+                .anyMatch(l -> l.passwordReminder.equals(passwordReminder));
+
+      if (!loginList.isEmpty()) {
+          if (isLogin) {
+              IO.println("--------------------------------------------------------------------------------------------------------------------------");
+              IO.println("Lembrete de senha aceito!");
+              IO.println();
+              IO.println("Login do funcionário:");
+              loginList
+                      .stream()
+                      .filter(l -> l.passwordReminder == passwordReminder)
+                      .forEach(l -> IO.println(l));
+              IO.println("--------------------------------------------------------------------------------------------------------------------------");
+          } else {
+              IO.println(String.format(localeBr, "Lembrete de senha %s -> Inexistente!", passwordReminder));
+          }
+      } else {
+          IO.println("Não há nenhum login cadastrado na lista!");
+      }
+
+    }
+
 
     @Override
     public void deleteLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword) {

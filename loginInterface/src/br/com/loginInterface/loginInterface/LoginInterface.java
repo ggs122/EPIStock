@@ -7,6 +7,7 @@ public interface LoginInterface {
     void showAllLogins(String myUser, String myPassword);
     void showSpecificLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword);
     void deleteLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword);
+    void rememberLogin(String passwordReminder);
     void showLogins(String user, String password);
 
 }

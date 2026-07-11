@@ -63,6 +63,8 @@ public class EmployeeImpl implements EmployeeInterface {
 
    public static List<EmployeeImpl> employeeList = new ArrayList<>();
 
+    EmployeeImpl.Jobe_Title [][] jobeTitle = new EmployeeImpl.Jobe_Title[4][3];
+
     public static List<EmployeeImpl> getEmployeeList() {
         return employeeList;
     }
@@ -172,6 +174,24 @@ public class EmployeeImpl implements EmployeeInterface {
                 IO.println(String.format(localeBr, "Data formato inválido! Impossível cadastrar o funcionário: %s %s %s, Identidade Nº %s, CPF Nº %s", employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber));
                 IO.println("Digite uma data válida.");
                 IO.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+        }
+    }
+
+    //TODO conferir e add interface.
+    public void showJobe_title() {
+        jobeTitle[0][0] = Jobe_Title.LANTERNAGEM;     jobeTitle[0][1] = Jobe_Title.PINTURA;     jobeTitle[0][2] = Jobe_Title.ESTOFADOR;
+        jobeTitle[1][0] = Jobe_Title.ELETRICISTA;     jobeTitle[1][1] = Jobe_Title.MECANICO;    jobeTitle[1][2] = Jobe_Title.TEC_REFRI;
+        jobeTitle[2][0] = Jobe_Title.MANOBRISTA;      jobeTitle[2][1] = Jobe_Title.JATISTA;     jobeTitle[2][2] = Jobe_Title.BORRACHEIRO;
+        jobeTitle[3][0] = Jobe_Title.ABASTECEDOR;     jobeTitle[3][1] = Jobe_Title.GERENTE;     jobeTitle[3][2] = Jobe_Title.GERENTE_R;
+        showJobeTitle();
+    }
+
+    //TODO conferir e add interface.
+    private void showJobeTitle() {
+        for (int i = 0; i < jobeTitle.length; i++) {
+            for (int j = 0; j < i; j++) {
+               EmployeeImpl.Jobe_Title jT = jobeTitle[i][j];
             }
         }
     }

@@ -4,7 +4,6 @@ package br.com.app.app;
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
 import br.com.loginInterface.loginInterface.LoginInterface;
 
-import java.time.LocalDate;
 import java.util.ServiceLoader;
 
 public class AppTest1 {
@@ -24,7 +23,7 @@ public class AppTest1 {
        login1.createLogin(1000, "Soares", "S.123456", "Niver", 1);
        login1.createLogin(1001, "Iracilda", "I.654321", "Ir", 1);
        login1.createLogin(1003, "Ivanildo", "I.131326", "Pt", 2);
-        login1.createLogin(1003, "Ivanildo", "I.131326", "Pt", 2);
+       login1.createLogin(1003, "Ivanildo", "I.131326", "Pt", 2);
        login1.showLogins("Soares", "S.123456");
        login1.showLogins("Iracilda", "I.654321");
        login1.showLogins("Ivanildo", "I.131326");
@@ -38,6 +37,13 @@ public class AppTest1 {
         login1.deleteLogin(1000, "Ivanildo", "I.131326");
 
         login1.showAllLogins("Ivanildo", "I.131326");
+
+        employee1.findEmployee(1000);
+//        employee1.deleteEmployee(1000);
+        employee1.printEmployeeList();
+
+        login1.createLogin(1004, "Rog", "R.366589", "Rog1", 2);
+        login1.showAllLogins("Rog", "R.366589");
 
     }
 }

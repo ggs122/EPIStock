@@ -176,7 +176,7 @@ public class EmployeeImpl implements EmployeeInterface {
         }
     }
 
-    //TODO verificar depois e implementar na interface
+    @Override
     public void findEmployee(int employeeEnrollmentNumber) {
 
       boolean isEmployee = employeeList
@@ -186,31 +186,46 @@ public class EmployeeImpl implements EmployeeInterface {
       if (isEmployee) {
           if (!employeeList.isEmpty()) {
 
+              IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+              IO.println("Funcionário encontrado:");
               employeeList
                       .stream()
                       .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
                       .forEach(e -> IO.println(e));
-
+              IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
           } else {
+              IO.println("--------------------------------------------------");
               IO.println("Não há clientes cadastrados no sistema -> Cadastre");
+              IO.println("--------------------------------------------------");
           }
       } else {
+          IO.println("-----------------------------------------------------------");
           IO.println(String.format(localeBr, "Matrícula %d -> Inexistente!!", employeeEnrollmentNumber));
+          IO.println("-----------------------------------------------------------");
       }
     }
 
-    //TODO verificar depois e implementar na interface
+    @Override
     public void deleteEmployee(int employeeEnrollmentNumber) {
-
         if (!employeeList.isEmpty()) {
+            IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            employeeList
+                    .stream()
+                    .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
+                    .forEach(e -> IO.println(e));
+
             boolean isEmployee = employeeList
                     .removeIf(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
 
             if (isEmployee) {
                 IO.println("Funcionário deletado com sucesso!");
+                IO.println("---------------------------------");
+                IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             }
         } else {
+            IO.println("--------------------------------------------------");
             IO.println("Não há clientes cadastrados no sistema -> Cadastre");
+            IO.println("--------------------------------------------------");
         }
     }
 

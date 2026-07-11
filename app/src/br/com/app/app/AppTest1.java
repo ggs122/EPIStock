@@ -47,5 +47,7 @@ public class AppTest1 {
 
         login1.rememberLogin("Rog1");
 
+        employee1.showJobe_title();
+
     }
 }

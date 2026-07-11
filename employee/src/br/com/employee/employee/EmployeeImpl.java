@@ -14,7 +14,17 @@ import java.util.Locale;
 public class EmployeeImpl implements EmployeeInterface {
 
     public enum Jobe_Title {
-        LANTERNAGEM, PINTURA, ESTOFADOR, ELETRICISTA, MECANICO, TEC_REFRI, MANOBRISTA, JATISTA, BORRACHEIRO, ABASTECEDOR, INEXISTENTE, GERENTE, GERENTE_R
+        LANTERNAGEM(1), PINTURA(2), ESTOFADOR(3), ELETRICISTA(4), MECANICO(5), TEC_REFRI(6), MANOBRISTA(7), JATISTA(8), BORRACHEIRO(9), ABASTECEDOR(10), INEXISTENTE(11), GERENTE(12), GERENTE_R(13), INATIVO(14);
+
+        public int jobeTitleNumber;
+
+        Jobe_Title(int jobeTitleNumber) {
+            this.jobeTitleNumber = jobeTitleNumber;
+        }
+
+        public int getJobeTitleNumber() {
+            return jobeTitleNumber;
+        }
     }
 
     public enum Status {
@@ -63,7 +73,7 @@ public class EmployeeImpl implements EmployeeInterface {
 
    public static List<EmployeeImpl> employeeList = new ArrayList<>();
 
-    EmployeeImpl.Jobe_Title [][] jobeTitle = new EmployeeImpl.Jobe_Title[4][3];
+    EmployeeImpl.Jobe_Title [][] jobeTitle = new EmployeeImpl.Jobe_Title[5][3];
 
     public static List<EmployeeImpl> getEmployeeList() {
         return employeeList;
@@ -178,22 +188,41 @@ public class EmployeeImpl implements EmployeeInterface {
         }
     }
 
-    //TODO conferir e add interface.
+    @Override
     public void showJobe_title() {
-        jobeTitle[0][0] = Jobe_Title.LANTERNAGEM;     jobeTitle[0][1] = Jobe_Title.PINTURA;     jobeTitle[0][2] = Jobe_Title.ESTOFADOR;
-        jobeTitle[1][0] = Jobe_Title.ELETRICISTA;     jobeTitle[1][1] = Jobe_Title.MECANICO;    jobeTitle[1][2] = Jobe_Title.TEC_REFRI;
-        jobeTitle[2][0] = Jobe_Title.MANOBRISTA;      jobeTitle[2][1] = Jobe_Title.JATISTA;     jobeTitle[2][2] = Jobe_Title.BORRACHEIRO;
-        jobeTitle[3][0] = Jobe_Title.ABASTECEDOR;     jobeTitle[3][1] = Jobe_Title.GERENTE;     jobeTitle[3][2] = Jobe_Title.GERENTE_R;
+
+        for (int i = 0; i < jobeTitle.length; i++) {
+            for (int j = 0; j < jobeTitle[i].length; j++) {
+                jobeTitle[i][j] = Jobe_Title.INATIVO;
+            }
+        }
+        Jobe_Title[] value = Jobe_Title.values();
+        int cont = 0;
+
+        for (int i = 0; i < jobeTitle.length; i++) {
+            for (int j = 0; j < jobeTitle[i].length; j++) {
+                if (cont < value.length) {
+                    jobeTitle[i][j] = value[cont];
+                    cont++;
+                }
+            }
+        }
         showJobeTitle();
     }
 
-    //TODO conferir e add interface.
     private void showJobeTitle() {
-        for (int i = 0; i < jobeTitle.length; i++) {
-            for (int j = 0; j < i; j++) {
-               EmployeeImpl.Jobe_Title jT = jobeTitle[i][j];
+        IO.println("--------------------------------------------------------------------------------");
+        IO.println("> Opções de profissões da empresa <");
+        IO.println();
+        if (jobeTitle.length > 0) {
+            for (int i = 0; i < jobeTitle.length; i++) {
+                for (int j = 0; j < jobeTitle[i].length; j++) {
+                    System.out.print(String.format(localeBr, "Nº %-5d  %-15s", jobeTitle[i][j].getJobeTitleNumber(), jobeTitle[i][j]));
+                }
+                System.out.println();
             }
         }
+        IO.println("--------------------------------------------------------------------------------");
     }
 
     @Override

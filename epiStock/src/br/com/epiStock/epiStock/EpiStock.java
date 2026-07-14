@@ -43,10 +43,14 @@ public class EpiStock {
 
        if (isPpeProductCode) {
            if (isppeCa) {
-               EpiStock epiStock = new EpiStock(ppeIdStatic++, ppeProductCode, ppeName, ppeCa, ppeDescriotion, ppeAmount);
-               epiStockList.add(epiStock);
+               if (isPpeProductCode && isppeCa) {
+                   EpiStock epiStock = new EpiStock(ppeIdStatic++, ppeProductCode, ppeName, ppeCa, ppeDescriotion, ppeAmount);
+                   epiStockList.add(epiStock);
+               } else {
+                   IO.println(String.format("Código do produto %s e número do C.A %s -> Inválidos", ppeProductCode, ppeCa));
+               }
            } else {
-               IO.println(String.format("Número do C.A %s -> Inválido"));
+               IO.println(String.format("Número do C.A %s -> Inválido", ppeCa));
            }
        } else {
            IO.println(String.format("Código do produto %s -> Inválido", ppeProductCode));

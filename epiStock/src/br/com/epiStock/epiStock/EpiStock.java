@@ -6,8 +6,8 @@ public class EpiStock {
     private String ppeProductCode;
     private String ppeName;
     private String ppeCa;
-    private String ppaDescriotion;
-    private int ppaAmount;
+    private String ppeDescriotion;
+    private int ppeAmount;
 
     private long employeeEnrollmentNumber;
 
@@ -16,8 +16,8 @@ public class EpiStock {
         this.ppeProductCode = productCode;
         this.ppeName = ppeName;
         this.ppeCa = ppeCa;
-        this.ppaDescriotion = ppaDescriotion;
-        this.ppaAmount = ppaAmount;
+        this.ppeDescriotion = ppaDescriotion;
+        this.ppeAmount = ppaAmount;
         this.employeeEnrollmentNumber = employeeEnrollmentNumber;
     }
 
@@ -26,13 +26,15 @@ public class EpiStock {
         this.ppeProductCode = productCode;
         this.ppeName = ppeName;
         this.ppeCa = ppeCa;
-        this.ppaDescriotion = ppaDescriotion;
-        this.ppaAmount = ppaAmount;
+        this.ppeDescriotion = ppaDescriotion;
+        this.ppeAmount = ppaAmount;
     }
 
 
-    public void addPpeToStock(String productCode, String epiName, String epiCa, String epiDescriotion, int epiAmount) {
-       boolean isProductCode  = productCode.matches("Ref\\.[0-9]{2}\\.[0-9]{3}\\.[0-9]{2}");
+    public void addPpeToStock(String ppeProductCode, String ppeName, String ppeCa, String ppeDescriotion, int ppeAmountAmount) {
+       boolean isPpeProductCode  = ppeProductCode.matches("Ref\\.[0-9]{2}\\.[0-9]{3}\\.[0-9]{2}");
+       boolean isppeCa = ppeCa.matches("CA - ([0-9])+");
+
     }
 
     public void personalProtectiveEquipmentDelivery() {

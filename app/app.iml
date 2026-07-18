@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="module" module-name="epiStock" />
+    <orderEntry type="module" module-name="epiStockInterface" />
     <orderEntry type="module" module-name="login" />
     <orderEntry type="module" module-name="loginInterface" />
     <orderEntry type="sourceFolder" forTests="false" />

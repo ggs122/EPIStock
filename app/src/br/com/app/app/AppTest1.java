@@ -2,6 +2,7 @@ package br.com.app.app;
 
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
+import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
 import br.com.loginInterface.loginInterface.LoginInterface;
 
 import java.util.ServiceLoader;
@@ -30,6 +31,8 @@ public class AppTest1 {
        login1.changeLogin("Ivanildo", "I.131326", 1001, "Iracilda", "I.654321", "Ira", "I.263263");
        login1.showLogins("Ira", "I.263263");
 
+       EpiStockInterface stock1 = ServiceLoader.load(EpiStockInterface.class).findFirst().orElseThrow();
+
        login1.showAllLogins("Ivanildo", "I.131326");
 
        login1.showSpecificLogin(1001, "Ivanildo", "I.131326");
@@ -48,6 +51,11 @@ public class AppTest1 {
         login1.rememberLogin("Rog1");
 
         employee1.showJobe_title();
+
+        stock1.addPpeToStock("10.302.05", "Protetor Auricular", "Plug", "123456", "Atenuação - ruídos - até 25db", 45);
+        stock1.addPpeToStock("20.305.60", "Óculos de proteção", "Transparente", "356598", "Proteção - partículas voláteis", 75);
+        stock1.addPpeToStock("55.363.25", "Respirador facial", "Descartável", "558987", "Pinturas - automotívas", 120);
+        stock1.printEpiStock();
 
     }
 }

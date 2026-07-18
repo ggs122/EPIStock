@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/employee/employee.iml" filepath="$PROJECT_DIR$/employee/employee.iml" />
       <module fileurl="file://$PROJECT_DIR$/employeeInterface/employeeInterface.iml" filepath="$PROJECT_DIR$/employeeInterface/employeeInterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/epiStock/epiStock.iml" filepath="$PROJECT_DIR$/epiStock/epiStock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/epiStockInterface/epiStockInterface.iml" filepath="$PROJECT_DIR$/epiStockInterface/epiStockInterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
       <module fileurl="file://$PROJECT_DIR$/loginInterface/loginInterface.iml" filepath="$PROJECT_DIR$/loginInterface/loginInterface.iml" />
     </modules>

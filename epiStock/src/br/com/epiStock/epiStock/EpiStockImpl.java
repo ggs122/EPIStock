@@ -23,6 +23,17 @@ public class EpiStockImpl implements EpiStockInterface {
 
     private long employeeEnrollmentNumber;
 
+    private EpiStockImpl(int ppeId, String ppeProductCode, String ppeName, String ppeType, String ppeCa, String ppeDescriotion, int ppeAmount, long employeeEnrollmentNumber) {
+        this.ppeId = ppeId;
+        this.ppeProductCode = ppeProductCode;
+        this.ppeName = ppeName;
+        this.ppeType = ppeType;
+        this.ppeCa = ppeCa;
+        this.ppeDescriotion = ppeDescriotion;
+        this.ppeAmount = ppeAmount;
+        this.employeeEnrollmentNumber = employeeEnrollmentNumber;
+    }
+
     private EpiStockImpl(EpiStockImpl other) {
         this.ppeId = other.ppeId;
         this.ppeProductCode = other.ppeProductCode;
@@ -31,7 +42,7 @@ public class EpiStockImpl implements EpiStockInterface {
         this.ppeCa = other.ppeCa;
         this.ppeDescriotion = other.ppeDescriotion;
         this.ppeAmount = other.ppeAmount;
-        this.employeeEnrollmentNumber = employeeEnrollmentNumber;
+        this.employeeEnrollmentNumber = other.employeeEnrollmentNumber;
     }
 
     private EpiStockImpl(int ppeId, String productCode, String ppeName, String ppeType, String ppeCa, String ppaDescriotion, int ppaAmount) {
@@ -90,9 +101,9 @@ public class EpiStockImpl implements EpiStockInterface {
                        .forEach(e -> {
                            if (ppeAmount > 0) {
                                e.ppeAmount -= ppeAmount;
-                               //TODO falta implementar o registro do recebimento no sistema.
-                               EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, e.ppeAmount, e.employeeEnrollmentNumber);
-                               epiStockRegisterUsedsList.add(epiStock);
+                               EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber);
+                               EpiStockImpl epiStockCopy = new EpiStockImpl(epiStock);
+                               epiStockRegisterUsedsList.add(epiStockCopy);
                            } else {
                                IO.println(String.format(localeBr, "Quantidade de epi (%d), não pode ser menor do que 0.", ppeAmount));
                            }
@@ -127,10 +138,37 @@ public class EpiStockImpl implements EpiStockInterface {
     public void printEpiStockUseds () {
         if (!epiStockRegisterUsedsList.isEmpty()) {
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            IO.println("> Estoque de EPI <");
-            epiStockRegisterUsedsList
+            IO.println("> Epis Entregues: <");
+
+          List<Long> employeeEnrollmentNumberLongList = epiStockRegisterUsedsList
                     .stream()
-                    .forEach(e -> IO.println(e));
+                    .mapToLong(e -> e.employeeEnrollmentNumber)
+                            .distinct()
+                                    .boxed()
+                                            .toList();
+
+          employeeEnrollmentNumberLongList
+                  .forEach(emll -> {
+                      IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                      IO.println("Funcionário:");
+                      employeeList
+                              .stream()
+                              .filter(e -> e.getEmployeeEnrollmentNumber() == emll && !e.getIs_Active().equals(EmployeeImpl.Status.Inativo))
+                              .forEach(e -> IO.println(String.format(localeBr, "Matrícula: %d | Nome: %s %s %s | Cargo: %s", e.getEmployeeEnrollmentNumber(), e.getEmployeeFirstName(), e.getEmployeeMiddleName(), e.getEmployeeLastname(), e.getJobe_title())));
+                      IO.println();
+                      IO.println("EPI retirado:");
+                      epiStockRegisterUsedsList
+                              .stream()
+                              .filter(epis -> epis.employeeEnrollmentNumber == emll)
+                              .forEach(e -> IO.println(e));
+                      IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                  });
+
+
+
+//            epiStockRegisterUsedsList
+//                    .stream()
+//                    .forEach(e -> IO.println(e));
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             IO.println("Nenhum epi foi usado ainda");

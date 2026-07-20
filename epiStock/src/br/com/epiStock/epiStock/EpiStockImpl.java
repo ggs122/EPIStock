@@ -6,6 +6,8 @@ import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class EpiStockImpl implements EpiStockInterface {
 
@@ -21,14 +23,14 @@ public class EpiStockImpl implements EpiStockInterface {
 
     private long employeeEnrollmentNumber;
 
-    private EpiStockImpl(int ppeId, String productCode, String ppeName, String ppeType, String ppeCa, String ppaDescriotion, int ppaAmount, long employeeEnrollmentNumber) {
-        this.ppeId = ppeId;
-        this.ppeProductCode = productCode;
-        this.ppeName = ppeName;
-        this.ppeType = ppeType;
-        this.ppeCa = ppeCa;
-        this.ppeDescriotion = ppaDescriotion;
-        this.ppeAmount = ppaAmount;
+    private EpiStockImpl(EpiStockImpl other) {
+        this.ppeId = other.ppeId;
+        this.ppeProductCode = other.ppeProductCode;
+        this.ppeName = other.ppeName;
+        this.ppeType = other.ppeType;
+        this.ppeCa = other.ppeCa;
+        this.ppeDescriotion = other.ppeDescriotion;
+        this.ppeAmount = other.ppeAmount;
         this.employeeEnrollmentNumber = employeeEnrollmentNumber;
     }
 
@@ -46,6 +48,7 @@ public class EpiStockImpl implements EpiStockInterface {
 
     static List<EpiStockImpl> epiStockList = new ArrayList<>();
     static List<EmployeeImpl> employeeList = EmployeeImpl.getEmployeeList();
+    static List<EpiStockImpl>epiStockRegisterUsedsList = new ArrayList<>();
 
 
     public void addPpeToStock(String ppeProductCode, String ppeName, String ppeType, String ppeCa, String ppeDescriotion, int ppeAmount) {
@@ -69,6 +72,7 @@ public class EpiStockImpl implements EpiStockInterface {
 
     }
 
+    @Override
     public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber) {
        boolean isEpi = epiStockList
                .stream()
@@ -87,7 +91,8 @@ public class EpiStockImpl implements EpiStockInterface {
                            if (ppeAmount > 0) {
                                e.ppeAmount -= ppeAmount;
                                //TODO falta implementar o registro do recebimento no sistema.
-//                               EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, );
+                               EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, e.ppeAmount, e.employeeEnrollmentNumber);
+                               epiStockRegisterUsedsList.add(epiStock);
                            } else {
                                IO.println(String.format(localeBr, "Quantidade de epi (%d), não pode ser menor do que 0.", ppeAmount));
                            }
@@ -115,6 +120,20 @@ public class EpiStockImpl implements EpiStockInterface {
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             IO.println("Não existe EPIs cadastrados no sistema.");
+        }
+    }
+
+    @Override
+    public void printEpiStockUseds () {
+        if (!epiStockRegisterUsedsList.isEmpty()) {
+            IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            IO.println("> Estoque de EPI <");
+            epiStockRegisterUsedsList
+                    .stream()
+                    .forEach(e -> IO.println(e));
+            IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        } else {
+            IO.println("Nenhum epi foi usado ainda");
         }
     }
 

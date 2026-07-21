@@ -20,6 +20,7 @@ public class EpiStockImpl implements EpiStockInterface {
     private String ppeCa;
     private String ppeDescriotion;
     private int ppeAmount;
+    //TODO -> adicionar o atributo ppeDeliveryDate na retirada de epi de cada funcionário -> registrando a data e hora da retirada do epi.
     private LocalDateTime ppeDeliveryDate;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 

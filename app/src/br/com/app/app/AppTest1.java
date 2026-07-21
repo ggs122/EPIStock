@@ -56,10 +56,10 @@ public class AppTest1 {
         stock1.addPpeToStock("20.305.60", "Óculos de proteção", "Transparente", "356598", "Proteção - partículas voláteis", 75);
         stock1.addPpeToStock("55.363.25", "Respirador facial", "Descartável", "558987", "Pinturas - automotívas", 120);
         stock1.printEpiStock();
-        stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1001);
-        stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1001);
-        stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1002);
-        stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1000);
+        stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1001, "20/05/2026");
+        stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1001, "05/07/2026");
+        stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1002, "15/08/2026");
+        stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1000, "10/03/2027");
         stock1.printEpiStock();
         stock1.printEpiStockUseds();
 

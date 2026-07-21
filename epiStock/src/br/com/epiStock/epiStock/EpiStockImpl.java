@@ -4,6 +4,7 @@ import br.com.employee.employee.EmployeeImpl;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -92,7 +93,8 @@ public class EpiStockImpl implements EpiStockInterface {
     }
 
     @Override
-    public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber, String ppeDeliveryDate) {
+    public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber, String ppeDeliveryDate){
+      LocalDateTime dateFormated = LocalDateTime.parse(ppeDeliveryDate, DateTimeFormatter.ofPattern("yyyy/MM/yyyy"));
        boolean isEpi = epiStockList
                .stream()
                .anyMatch(e -> e.ppeProductCode.equals(ppeProductCode));
@@ -110,7 +112,7 @@ public class EpiStockImpl implements EpiStockInterface {
                            if (ppeAmount > 0) {
                                if (e.ppeAmount > 0) {
                                    e.ppeAmount -= ppeAmount;
-                                   EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber);
+                                   EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber, dateFormated);
                                    EpiStockImpl epiStockCopy = new EpiStockImpl(epiStock);
                                    epiStockRegisterUsedsList.add(epiStockCopy);
                                } else {

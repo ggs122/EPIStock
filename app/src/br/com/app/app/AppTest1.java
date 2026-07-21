@@ -59,6 +59,7 @@ public class AppTest1 {
         stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1001);
         stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1001);
         stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1002);
+        stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1000);
         stock1.printEpiStock();
         stock1.printEpiStockUseds();
 

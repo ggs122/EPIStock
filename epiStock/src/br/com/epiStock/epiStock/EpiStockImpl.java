@@ -3,6 +3,7 @@ package br.com.epiStock.epiStock;
 import br.com.employee.employee.EmployeeImpl;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +20,7 @@ public class EpiStockImpl implements EpiStockInterface {
     private String ppeCa;
     private String ppeDescriotion;
     private int ppeAmount;
+    private LocalDateTime ppeDeliveryDate;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
     private long employeeEnrollmentNumber;
@@ -71,6 +73,9 @@ public class EpiStockImpl implements EpiStockInterface {
                if (isPpeProductCode && isppeCa) {
                    EpiStockImpl epiStock = new EpiStockImpl(ppeIdStatic++, ppeProductCode, ppeName, ppeType, ppeCa, ppeDescriotion, ppeAmount);
                    epiStockList.add(epiStock);
+                   IO.println("------------------------------------------------------------------------------------");
+                   IO.println(String.format(localeBr, "Epi, %s, C.A %s -> Cadastrado no estoque com sucesso.", ppeName, ppeCa));
+                   IO.println("------------------------------------------------------------------------------------");
                } else {
                    IO.println(String.format("Código do produto %s e número do C.A %s -> Inválidos", ppeProductCode, ppeCa));
                }
@@ -91,7 +96,7 @@ public class EpiStockImpl implements EpiStockInterface {
 
        boolean isEmployee = employeeList
                .stream()
-               .anyMatch(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
+               .anyMatch(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber && !e.getIs_Active().equals(EmployeeImpl.Status.Inativo));
 
        if (isEpi) {
            if (isEmployee) {
@@ -100,10 +105,14 @@ public class EpiStockImpl implements EpiStockInterface {
                        .filter( e -> e.ppeProductCode.equals(ppeProductCode))
                        .forEach(e -> {
                            if (ppeAmount > 0) {
-                               e.ppeAmount -= ppeAmount;
-                               EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber);
-                               EpiStockImpl epiStockCopy = new EpiStockImpl(epiStock);
-                               epiStockRegisterUsedsList.add(epiStockCopy);
+                               if (e.ppeAmount > 0) {
+                                   e.ppeAmount -= ppeAmount;
+                                   EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber);
+                                   EpiStockImpl epiStockCopy = new EpiStockImpl(epiStock);
+                                   epiStockRegisterUsedsList.add(epiStockCopy);
+                               } else {
+                                   IO.println(String.format(localeBr, "Produto código: %s -> saldo insuficiente!", ppeProductCode));
+                               }
                            } else {
                                IO.println(String.format(localeBr, "Quantidade de epi (%d), não pode ser menor do que 0.", ppeAmount));
                            }
@@ -112,7 +121,7 @@ public class EpiStockImpl implements EpiStockInterface {
 
 
            } else {
-               IO.println(String.format(localeBr, "Matrícula %d -> Inválida", employeeEnrollmentNumber));
+               IO.println(String.format(localeBr, "Matrícula %d -> Inválida ou funcionário demitido!", employeeEnrollmentNumber));
            }
        } else {
            IO.println(String.format(localeBr, "Código do produto %s -> Inválido!", ppeProductCode));
@@ -163,12 +172,6 @@ public class EpiStockImpl implements EpiStockInterface {
                               .forEach(e -> IO.println(e));
                       IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                   });
-
-
-
-//            epiStockRegisterUsedsList
-//                    .stream()
-//                    .forEach(e -> IO.println(e));
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             IO.println("Nenhum epi foi usado ainda");

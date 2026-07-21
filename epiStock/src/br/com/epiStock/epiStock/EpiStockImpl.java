@@ -21,12 +21,12 @@ public class EpiStockImpl implements EpiStockInterface {
     private String ppeDescriotion;
     private int ppeAmount;
     //TODO -> adicionar o atributo ppeDeliveryDate na retirada de epi de cada funcionário -> registrando a data e hora da retirada do epi.
-    private LocalDateTime ppeDeliveryDate;
+    private LocalDateTime ppeDeliveryDate = LocalDateTime.of(0001, 01, 01, 00, 00);
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
     private long employeeEnrollmentNumber;
 
-    private EpiStockImpl(int ppeId, String ppeProductCode, String ppeName, String ppeType, String ppeCa, String ppeDescriotion, int ppeAmount, long employeeEnrollmentNumber) {
+    private EpiStockImpl(int ppeId, String ppeProductCode, String ppeName, String ppeType, String ppeCa, String ppeDescriotion, int ppeAmount, long employeeEnrollmentNumber, LocalDateTime ppeDeliveryDate) {
         this.ppeId = ppeId;
         this.ppeProductCode = ppeProductCode;
         this.ppeName = ppeName;
@@ -35,6 +35,7 @@ public class EpiStockImpl implements EpiStockInterface {
         this.ppeDescriotion = ppeDescriotion;
         this.ppeAmount = ppeAmount;
         this.employeeEnrollmentNumber = employeeEnrollmentNumber;
+        this.ppeDeliveryDate = ppeDeliveryDate;
     }
 
     private EpiStockImpl(EpiStockImpl other) {
@@ -46,6 +47,7 @@ public class EpiStockImpl implements EpiStockInterface {
         this.ppeDescriotion = other.ppeDescriotion;
         this.ppeAmount = other.ppeAmount;
         this.employeeEnrollmentNumber = other.employeeEnrollmentNumber;
+        this.ppeDeliveryDate = other.ppeDeliveryDate;
     }
 
     private EpiStockImpl(int ppeId, String productCode, String ppeName, String ppeType, String ppeCa, String ppaDescriotion, int ppaAmount) {
@@ -90,7 +92,7 @@ public class EpiStockImpl implements EpiStockInterface {
     }
 
     @Override
-    public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber) {
+    public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber, String ppeDeliveryDate) {
        boolean isEpi = epiStockList
                .stream()
                .anyMatch(e -> e.ppeProductCode.equals(ppeProductCode));

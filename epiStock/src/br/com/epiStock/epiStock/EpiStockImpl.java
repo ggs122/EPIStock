@@ -94,7 +94,8 @@ public class EpiStockImpl implements EpiStockInterface {
 
     @Override
     public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber, String ppeDeliveryDate){
-      LocalDateTime dateFormated = LocalDateTime.parse(ppeDeliveryDate, DateTimeFormatter.ofPattern("yyyy/MM/yyyy"));
+   DateTimeFormatter dateFormated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", localeBr);
+   LocalDateTime ppeDeliveryDateFormated = LocalDateTime.parse(ppeDeliveryDate, dateFormated);
        boolean isEpi = epiStockList
                .stream()
                .anyMatch(e -> e.ppeProductCode.equals(ppeProductCode));
@@ -112,7 +113,7 @@ public class EpiStockImpl implements EpiStockInterface {
                            if (ppeAmount > 0) {
                                if (e.ppeAmount > 0) {
                                    e.ppeAmount -= ppeAmount;
-                                   EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber, dateFormated);
+                                   EpiStockImpl epiStock = new EpiStockImpl(e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, ppeAmount, employeeEnrollmentNumber, ppeDeliveryDateFormated);
                                    EpiStockImpl epiStockCopy = new EpiStockImpl(epiStock);
                                    epiStockRegisterUsedsList.add(epiStockCopy);
                                } else {
@@ -151,6 +152,7 @@ public class EpiStockImpl implements EpiStockInterface {
     @Override
     public void printEpiStockUseds () {
         if (!epiStockRegisterUsedsList.isEmpty()) {
+            DateTimeFormatter dateFormated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", localeBr);
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> Epis Entregues: <");
 
@@ -174,7 +176,7 @@ public class EpiStockImpl implements EpiStockInterface {
                       epiStockRegisterUsedsList
                               .stream()
                               .filter(epis -> epis.employeeEnrollmentNumber == emll)
-                              .forEach(e -> IO.println(e));
+                              .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Cód: %s | Epi: %s | Tipo: %s | C.A %s | Descrição: %s | Qtde: %d | Date e hora da retirada: %s", e.ppeId, e.ppeProductCode, e.ppeType, e.ppeCa, e.ppeDescriotion, e.ppeAmount, e.ppeDeliveryDate.format(dateFormated))));
                       IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                   });
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");

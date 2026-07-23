@@ -21,7 +21,6 @@ public class EpiStockImpl implements EpiStockInterface {
     private String ppeCa;
     private String ppeDescriotion;
     private int ppeAmount;
-    //TODO -> adicionar o atributo ppeDeliveryDate na retirada de epi de cada funcionário -> registrando a data e hora da retirada do epi.
     private LocalDateTime ppeDeliveryDate = LocalDateTime.of(0001, 01, 01, 00, 00);
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
@@ -89,7 +88,15 @@ public class EpiStockImpl implements EpiStockInterface {
        } else {
            IO.println(String.format("Código do produto %s -> Inválido", ppeProductCode));
        }
+    }
 
+    private static boolean chechingIfSameAddPpeToStock(String ppeProductCode, String ppeName, String ppeCa) {
+
+       boolean isSameEpi = epiStockList
+                .stream()
+                .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeName.equalsIgnoreCase(ppeName) || e.ppeCa.equalsIgnoreCase(ppeCa));
+
+       return isSameEpi;
     }
 
     @Override

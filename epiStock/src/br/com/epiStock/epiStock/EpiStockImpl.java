@@ -165,7 +165,7 @@ public class EpiStockImpl implements EpiStockInterface {
 
           employeeEnrollmentNumberLongList
                   .forEach(emll -> {
-                      IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                      IO.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                       IO.println("Funcionário:");
                       employeeList
                               .stream()
@@ -176,8 +176,8 @@ public class EpiStockImpl implements EpiStockInterface {
                       epiStockRegisterUsedsList
                               .stream()
                               .filter(epis -> epis.employeeEnrollmentNumber == emll)
-                              .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Cód: %s | Epi: %s | Tipo: %s | C.A %s | Descrição: %s | Qtde: %d | Date e hora da retirada: %s", e.ppeId, e.ppeProductCode, e.ppeType, e.ppeCa, e.ppeDescriotion, e.ppeAmount, e.ppeDeliveryDate.format(dateFormated))));
-                      IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                              .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Cód: %s | Epi: %-25s | Tipo: %-15s | C.A %s | Descrição: %-35s | Qtde: %d | Date e hora da retirada: %s", e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, e.ppeAmount, e.ppeDeliveryDate.format(dateFormated))));
+                      IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                   });
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {

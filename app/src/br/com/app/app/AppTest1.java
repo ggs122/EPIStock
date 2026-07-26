@@ -60,6 +60,8 @@ public class AppTest1 {
         stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1001, "05/07/2026 14:30");
         stock1.personalProtectiveEquipmentDelivery("55.363.25", 1, 1002, "15/08/2026 22:50");
         stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1000, "10/03/2027 15:30");
+//        stock1.deleteSpecificEpiForCodRef("10.302.05");
+        //stock1.deleteAllEpiStock();
         stock1.printEpiStock();
         stock1.printEpiStockUseds();
         stock1.printSpecificEpiUsed(1001);

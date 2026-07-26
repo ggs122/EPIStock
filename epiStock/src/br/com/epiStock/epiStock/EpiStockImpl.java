@@ -90,13 +90,25 @@ public class EpiStockImpl implements EpiStockInterface {
        }
     }
 
+    @Override
     public void deleteAllEpiStock() {
         epiStockList.clear();
+        IO.println("Todos os epi's foram deletados do estoque com sucesso!");
     }
 
+    @Override
     public void deleteSpecificEpiForCodRef(String codRef) {
-        epiStockList
-                .removeIf()
+      boolean isProductCode = epiStockList
+                .stream()
+                .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(codRef));
+
+      if (isProductCode) {
+          epiStockList
+                  .removeIf(e -> e.ppeProductCode.equalsIgnoreCase(codRef));
+          IO.println(String.format(localeBr, "Epi, Ref: %s -> deletado com sucesso!", codRef));
+      } else {
+          IO.println(String.format(localeBr, "Código de produto: %s -> inválido", codRef));
+      }
 
     }
 

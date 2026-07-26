@@ -113,10 +113,15 @@ public class EpiStockImpl implements EpiStockInterface {
     }
 
     private static boolean chechingIfSameAddPpeToStock(String ppeProductCode, String ppeName, String ppeCa) {
-
+        Locale localeBr = Locale.forLanguageTag("pt-BR");
        boolean isSameEpi = epiStockList
                 .stream()
-                .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeName.equalsIgnoreCase(ppeName) || e.ppeCa.equalsIgnoreCase(ppeCa));
+                .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeName.equalsIgnoreCase(ppeName) && e.ppeCa.equalsIgnoreCase(ppeCa));
+       if (isSameEpi) {
+           IO.println(String.format(localeBr, "Epi Cód: Ref.%s | Nome: %s | CA: %s -> já consta no estoque.", ppeProductCode, ppeName, ppeCa));
+       } else {
+           IO.println(String.format(localeBr, "Epi Cód: Ref.%s | Nome: %s | CA: %s -> cadastrado com sucesso!", ppeProductCode, ppeName, ppeCa));
+       }
 
        return isSameEpi;
     }

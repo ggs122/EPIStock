@@ -23,6 +23,7 @@ public class EpiStockImpl implements EpiStockInterface {
     private int ppeAmount;
     private LocalDateTime ppeDeliveryDate = LocalDateTime.of(0001, 01, 01, 00, 00);
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
+    DateTimeFormatter dateFormated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", localeBr);
 
     private long employeeEnrollmentNumber;
 
@@ -112,33 +113,23 @@ public class EpiStockImpl implements EpiStockInterface {
 
     }
 
-    private static boolean chechingIfSameAddPpeToStock(String ppeProductCode, String ppeName, String ppeCa) {
+    private static boolean chechingIfSameAddPpeToStock(String ppeProductCode, String ppeCa) {
         Locale localeBr = Locale.forLanguageTag("pt-BR");
        boolean isSameEpi = epiStockList
                 .stream()
-                .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeName.equalsIgnoreCase(ppeName) && e.ppeCa.equalsIgnoreCase(ppeCa));
-      boolean isSameCa = epiStockList
-               .stream()
-               .anyMatch(e -> e.ppeCa.equalsIgnoreCase(ppeCa));
-
-      if (isSameCa) {
-          IO.println(String.format(localeBr, "Epi C.A %s já consta no sistema", ppeCa));
-      } else {
-          IO.println(String.format(localeBr, "Epi C.A %s -> cadastrado no sistema!", ppeCa));
-      }
+                .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeCa.equalsIgnoreCase(ppeCa));
 
        if (isSameEpi) {
-           IO.println(String.format(localeBr, "Epi Cód: Ref.%s | Nome: %s | CA: %s -> já consta no estoque.", ppeProductCode, ppeName, ppeCa));
+           IO.println(String.format(localeBr, "Epi Cód: Ref.%s | CA: %s -> já consta no estoque.", ppeProductCode, ppeCa));
        } else {
-           IO.println(String.format(localeBr, "Epi Cód: Ref.%s | Nome: %s | CA: %s -> cadastrado com sucesso!", ppeProductCode, ppeName, ppeCa));
+           IO.println(String.format(localeBr, "Epi Cód: Ref.%s | CA: %s -> cadastrado com sucesso!", ppeProductCode, ppeCa));
        }
        return isSameEpi;
     }
 
     @Override
     public void personalProtectiveEquipmentDelivery(String ppeProductCode, int ppeAmount, long employeeEnrollmentNumber, String ppeDeliveryDate){
-   DateTimeFormatter dateFormated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", localeBr);
-   LocalDateTime ppeDeliveryDateFormated = LocalDateTime.parse(ppeDeliveryDate, dateFormated);
+    LocalDateTime ppeDeliveryDateFormated = LocalDateTime.parse(ppeDeliveryDate, dateFormated);
        boolean isEpi = epiStockList
                .stream()
                .anyMatch(e -> e.ppeProductCode.equals(ppeProductCode));
@@ -195,7 +186,6 @@ public class EpiStockImpl implements EpiStockInterface {
     @Override
     public void printEpiStockUseds () {
         if (!epiStockRegisterUsedsList.isEmpty()) {
-            DateTimeFormatter dateFormated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", localeBr);
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> Epis Entregues: <");
 
@@ -253,7 +243,7 @@ public class EpiStockImpl implements EpiStockInterface {
              epiStockRegisterUsedsList
                      .stream()
                      .filter(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber)
-                     .forEach(e -> IO.println(e));
+                     .forEach(e -> IO.println(e + " | Data: " + e.ppeDeliveryDate.format(dateFormated)));
              IO.println();
              IO.println("Total de Epi's retirados:");
            int EpiTotal = epiStockRegisterUsedsList

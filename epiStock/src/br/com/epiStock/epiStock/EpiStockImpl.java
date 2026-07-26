@@ -117,12 +117,21 @@ public class EpiStockImpl implements EpiStockInterface {
        boolean isSameEpi = epiStockList
                 .stream()
                 .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeName.equalsIgnoreCase(ppeName) && e.ppeCa.equalsIgnoreCase(ppeCa));
+      boolean isSameCa = epiStockList
+               .stream()
+               .anyMatch(e -> e.ppeCa.equalsIgnoreCase(ppeCa));
+
+      if (isSameCa) {
+          IO.println(String.format(localeBr, "Epi C.A %s já consta no sistema", ppeCa));
+      } else {
+          IO.println(String.format(localeBr, "Epi C.A %s -> cadastrado no sistema!", ppeCa));
+      }
+
        if (isSameEpi) {
            IO.println(String.format(localeBr, "Epi Cód: Ref.%s | Nome: %s | CA: %s -> já consta no estoque.", ppeProductCode, ppeName, ppeCa));
        } else {
            IO.println(String.format(localeBr, "Epi Cód: Ref.%s | Nome: %s | CA: %s -> cadastrado com sucesso!", ppeProductCode, ppeName, ppeCa));
        }
-
        return isSameEpi;
     }
 

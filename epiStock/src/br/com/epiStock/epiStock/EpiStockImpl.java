@@ -74,14 +74,11 @@ public class EpiStockImpl implements EpiStockInterface {
 
        if (isPpeProductCode) {
            if (isppeCa) {
-               if (isPpeProductCode && isppeCa) {
+               if (isPpeProductCode && isppeCa && chechingIfSameAddPpeToStock(ppeProductCode, ppeCa) == false) {
                    EpiStockImpl epiStock = new EpiStockImpl(ppeIdStatic++, ppeProductCode, ppeName, ppeType, ppeCa, ppeDescriotion, ppeAmount);
                    epiStockList.add(epiStock);
-                   IO.println("------------------------------------------------------------------------------------");
-                   IO.println(String.format(localeBr, "Epi, %s, C.A %s -> Cadastrado no estoque com sucesso.", ppeName, ppeCa));
-                   IO.println("------------------------------------------------------------------------------------");
                } else {
-                   IO.println(String.format("Código do produto %s e número do C.A %s -> Inválidos", ppeProductCode, ppeCa));
+                   IO.println(String.format("Código do produto %s e número do C.A %s -> Inválidos.", ppeProductCode, ppeCa));
                }
            } else {
                IO.println(String.format("Número do C.A %s -> Inválido", ppeCa));
@@ -113,16 +110,20 @@ public class EpiStockImpl implements EpiStockInterface {
 
     }
 
-    private static boolean chechingIfSameAddPpeToStock(String ppeProductCode, String ppeCa) {
+    private static boolean chechingIfSameAddPpeToStock(String ppeProductCode,  String ppeCa) {
         Locale localeBr = Locale.forLanguageTag("pt-BR");
        boolean isSameEpi = epiStockList
                 .stream()
                 .anyMatch(e -> e.ppeProductCode.equalsIgnoreCase(ppeProductCode) && e.ppeCa.equalsIgnoreCase(ppeCa));
 
        if (isSameEpi) {
+           IO.println("-------------------------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Epi Cód: Ref.%s | CA: %s -> já consta no estoque.", ppeProductCode, ppeCa));
+           IO.println("-------------------------------------------------------------------------------------------------------");
        } else {
+           IO.println("---------------------------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Epi Cód: Ref.%s | CA: %s -> cadastrado com sucesso!", ppeProductCode, ppeCa));
+           IO.println("-------------------------------------------------------------------------------------------------------");
        }
        return isSameEpi;
     }

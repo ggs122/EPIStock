@@ -62,6 +62,7 @@ public class AppTest1 {
         stock1.personalProtectiveEquipmentDelivery("10.302.05", 1, 1000, "10/03/2027 15:30");
         stock1.printEpiStock();
         stock1.printEpiStockUseds();
+        stock1.printSpecificEpiUsed(1001);
 
     }
 }

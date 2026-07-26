@@ -90,6 +90,16 @@ public class EpiStockImpl implements EpiStockInterface {
        }
     }
 
+    public void deleteAllEpiStock() {
+        epiStockList.clear();
+    }
+
+    public void deleteSpecificEpiForCodRef(String codRef) {
+        epiStockList
+                .removeIf()
+
+    }
+
     private static boolean chechingIfSameAddPpeToStock(String ppeProductCode, String ppeName, String ppeCa) {
 
        boolean isSameEpi = epiStockList
@@ -190,6 +200,50 @@ public class EpiStockImpl implements EpiStockInterface {
         } else {
             IO.println("Nenhum epi foi usado ainda");
         }
+    }
+
+    @Override
+    public void printSpecificEpiUsed(long employeeEnrollmentNumber) {
+      boolean isEmployee = employeeList
+                .stream()
+                .anyMatch(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
+
+     boolean isEpiUsedWithEmployeeEnrollmentNumber = epiStockRegisterUsedsList
+              .stream()
+              .anyMatch(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber);
+
+     if (isEmployee) {
+         if (isEpiUsedWithEmployeeEnrollmentNumber) {
+             IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+             IO.println("Epi's retirados pelo funcionário:");
+             IO.println();
+             IO.println("Dados do funcionário:");
+             employeeList
+                     .stream()
+                             .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
+                                     .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Mat: %s | Nome: %s %s %s | Cargo: %s", e.getEmployeeId(), e.getEmployeeEnrollmentNumber(), e.getEmployeeFirstName(), e.getEmployeeMiddleName(), e.getEmployeeLastname(), e.getJobe_title())));
+             IO.println();
+             IO.println("Epi's retirados:");
+             epiStockRegisterUsedsList
+                     .stream()
+                     .filter(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber)
+                     .forEach(e -> IO.println(e));
+             IO.println();
+             IO.println("Total de Epi's retirados:");
+           int EpiTotal = epiStockRegisterUsedsList
+                     .stream()
+                     .filter(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber)
+                     .mapToInt(e -> e.ppeAmount)
+                     .sum();
+             System.out.println(EpiTotal);
+             IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+         } else {
+             IO.println(String.format(localeBr, "Não houve nenhuma entrega de EPI com a matrícula: %d", employeeEnrollmentNumber));
+         }
+     } else {
+         IO.println(String.format(localeBr, "Funcionário com a matrícula: %d -> inexistente!", employeeEnrollmentNumber));
+     }
+
     }
 
     @Override

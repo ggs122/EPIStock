@@ -361,7 +361,7 @@ public class LoginImpl implements LoginInterface {
     }
 
     //TODO parei aqui.
-    public static boolean loginOne(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
+    protected static boolean loginOne(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
         LoginImpl login = new LoginImpl();
        return login.login(myEmployeeEnrollmentNumber, myUser, myPassword);
     }

@@ -342,6 +342,7 @@ public class EmployeeImpl implements EmployeeInterface {
         }
     }
 
+    //FIXME corrigir lógica
     @Override
     public void  calculateTenure(long employeeEnrollmentNumber) {
       boolean isEmployee = employeeList
@@ -369,13 +370,21 @@ public class EmployeeImpl implements EmployeeInterface {
                       System.out.println(String.format(localeBr, "Data de Demissão -> %s ", e.terminationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy", localeBr))));
                       System.out.println(String.format(localeBr, "Data de Admissão -> %s ", e.hireDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy", localeBr))));
                       IO.println();
-                      if (localMinusYear >= 1) {
+                      if (localMinusYear >= 1 && localMinusDay == 0 && localMinusMonth == 0) {
                           IO.println("Período trabalhado na empresa:");
-                          IO.println(String.format(localeBr, "%d dia(s), %d mese(s), %d ano(s).", localMinusDay, localMinusMonth, localMinusYear));
+                          IO.println(String.format(localeBr, "%d ano(s).", localMinusYear));
                           IO.println("-----------------------------------------------------------");
-                      } else {
+                      } else if (localMinusDay >= 1 && localMinusMonth >= 1 && localMinusYear >= 1){
+                              IO.println("Período trabalhado na empresa:");
+                              IO.println(String.format(localeBr, "%d dia(s), %d mese(s), %d anos(s).", localMinusDay, localMinusMonth, localMinusYear));
+                              IO.println("-----------------------------------------------------------");
+                      } else if (localMinusDay >= 1 && localMinusMonth == 0 && localMinusYear == 0) {
                           IO.println("Período trabalhado na empresa:");
-                          IO.println(String.format(localeBr, "%d dia(s), %d mese(s).", localMinusDay, localMinusMonth));
+                          IO.println(String.format(localeBr, "%d dia(s).", localMinusDay));
+                          IO.println("-----------------------------------------------------------");
+                      } else if (localMinusDay == 0 && localMinusMonth >= 1 && localMinusYear == 0) {
+                          IO.println("Período trabalhado na empresa:");
+                          IO.println(String.format(localeBr, "%d mês(meses).", localMinusMonth));
                           IO.println("-----------------------------------------------------------");
                       }
                   });

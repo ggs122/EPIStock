@@ -9,6 +9,8 @@ module login {
     requires employeeInterface;
     requires loginInterface;
 
+    exports br.com.login.login;
+
     provides br.com.loginInterface.loginInterface.LoginInterface with br.com.login.login.LoginImpl;
 
 

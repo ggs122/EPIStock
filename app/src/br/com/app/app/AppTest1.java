@@ -67,5 +67,7 @@ public class AppTest1 {
         stock1.printEpiStockUseds();
         stock1.printSpecificEpiUsed(1001);
 
+        employee1.calculateTenure(1000);
+
     }
 }

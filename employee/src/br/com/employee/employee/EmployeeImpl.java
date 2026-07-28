@@ -6,6 +6,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -339,6 +340,49 @@ public class EmployeeImpl implements EmployeeInterface {
                     .forEach(e -> IO.println(e));
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
+    }
+
+    @Override
+    public void  calculateTenure(long employeeEnrollmentNumber) {
+      boolean isEmployee = employeeList
+                .stream()
+                .anyMatch(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber && e.is_Active.equals(Status.Inativo));
+
+      if (isEmployee) {
+          employeeList
+                  .stream()
+                  .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
+                  .forEach(e -> {
+                      IO.println("-----------------------------------------------------------");
+                      IO.println("PERÍODO TRABALHADO:");
+                      IO.println();
+
+                   int localMinusDay = e.terminationDate.getDayOfMonth() - e.hireDate.getDayOfMonth();
+                   int localMinusMonth = e.terminationDate.getMonthValue() - e.hireDate.getMonthValue();
+                   int localMinusYear = e.terminationDate.getYear() - e.hireDate.getYear();
+
+
+                   IO.println("Dados do Funcionário:");
+                   IO.println();
+                   IO.println(String.format(localeBr, "Mat: %s | Nome: %s %s %s", e.getEmployeeEnrollmentNumber(), e.getEmployeeFirstName(), e.getEmployeeMiddleName(), e.getEmployeeLastname()));
+                   IO.println();
+                      System.out.println(String.format(localeBr, "Data de Demissão -> %s ", e.terminationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy", localeBr))));
+                      System.out.println(String.format(localeBr, "Data de Admissão -> %s ", e.hireDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy", localeBr))));
+                      IO.println();
+                      if (localMinusYear >= 1) {
+                          IO.println("Período trabalhado na empresa:");
+                          IO.println(String.format(localeBr, "%d dia(s), %d mese(s), %d ano(s).", localMinusDay, localMinusMonth, localMinusYear));
+                          IO.println("-----------------------------------------------------------");
+                      } else {
+                          IO.println("Período trabalhado na empresa:");
+                          IO.println(String.format(localeBr, "%d dia(s), %d mese(s).", localMinusDay, localMinusMonth));
+                          IO.println("-----------------------------------------------------------");
+                      }
+                  });
+      } else {
+          IO.println(String.format(localeBr, "Matrícula %d -> Inexistente \nou\no funcionário ainda não foi demitido.", employeeEnrollmentNumber));
+          IO.println("-----------------------------------------------------------");
+      }
     }
 
     @Override

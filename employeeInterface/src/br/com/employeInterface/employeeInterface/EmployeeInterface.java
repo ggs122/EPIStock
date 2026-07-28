@@ -5,6 +5,7 @@ public interface EmployeeInterface {
     void terminationDateEmployee(long employeeEnrollmentNumber, String terminationDateEmployee);
     void findEmployee(int employeeEnrollmentNumber);
     void deleteEmployee(int employeeEnrollmentNumber);
+    void  calculateTenure(long employeeEnrollmentNumber);
     void showJobe_title();
     void printEmployeeList();
 }

@@ -360,6 +360,25 @@ public class LoginImpl implements LoginInterface {
 
     }
 
+    public static boolean loginOne(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
+        LoginImpl login = new LoginImpl();
+       return login.login(myEmployeeEnrollmentNumber, myUser, myPassword);
+    }
+
+    private boolean login(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
+       boolean isLogin = loginList
+                .stream()
+                .anyMatch(e -> e.employeeEnrollmentNumber == myEmployeeEnrollmentNumber && e.user.equals(myUser.trim()) && e.password.equals(myPassword.trim()));
+
+       if (isLogin) {
+           IO.println("Login -> Sucesso!");
+       } else {
+           IO.println("Login -> Falhou");
+       }
+
+       return isLogin;
+    }
+
     @Override
     public String toString() {
         return String.format(localeBr, "Matrícula: %d | Usuário: %-15s | Senha: %s | Lembrete de Senha: %-8s | Login Type: %s", employeeEnrollmentNumber, user, password, passwordReminder, authenticationType);

@@ -2,6 +2,13 @@ package br.com.employee.employee;
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -339,6 +346,7 @@ public class EmployeeImpl implements EmployeeInterface {
             employeeList
                     .stream()
                     .forEach(e -> IO.println(e));
+            EmployeeImpl.loginEmployee();
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
@@ -394,6 +402,32 @@ public class EmployeeImpl implements EmployeeInterface {
           IO.println(String.format(localeBr, "Matrícula %d -> Inexistente \nou\no funcionário ainda não foi demitido.", employeeEnrollmentNumber));
           IO.println("-----------------------------------------------------------");
       }
+    }
+
+    private static void loginEmployee() {
+        File employeLoginPathToFile = new File("EmployeeLogin");
+        if (!employeLoginPathToFile.exists()) {
+          employeLoginPathToFile.mkdir();
+      }
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("EmployeeLogin/login.txt", StandardCharsets.UTF_8))) {
+            bw.write("> Lista de Funcionários <");
+            bw.newLine();
+            bw.newLine();
+            employeeList
+                    .stream()
+                    .forEach(e -> {
+                        try {
+                            bw.write(e.toString().concat("\n"));
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

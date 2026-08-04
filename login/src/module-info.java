@@ -8,6 +8,7 @@ module login {
     requires employee;
     requires employeeInterface;
     requires loginInterface;
+    requires org.slf4j;
 
     exports br.com.login.login;
 

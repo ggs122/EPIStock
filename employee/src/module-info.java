@@ -5,6 +5,7 @@ module employee {
 
 
     requires employeeInterface;
+    requires org.slf4j;
 
     exports br.com.employee.employee;
 

@@ -1,6 +1,8 @@
 package br.com.employee.employee;
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,6 +61,7 @@ public class EmployeeImpl implements EmployeeInterface {
     private final String currency = "BRL";
     private NumberFormat numberFormat;
     private String newSalaryFormated;
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeImpl.class);
 
     private EmployeeImpl(long employeeId, long employeeEnrollmentNumber, String employeeFirstName, String employeeMiddleName, String employeeLastname, String employeeIdNumber, String employeeCpfNumber, Jobe_Title jobe_title, double employeeSalary, LocalDate hireDate, LocalDate terminationDate, Status is_Active) {
         this.employeeId = employeeId;
@@ -347,6 +350,7 @@ public class EmployeeImpl implements EmployeeInterface {
                     .stream()
                     .forEach(e -> IO.println(e));
             EmployeeImpl.loginEmployee();
+            LOGGER.info("Lista de empregados mostrada com sucesso!");
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }

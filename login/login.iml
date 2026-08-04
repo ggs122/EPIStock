@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="employeeInterface" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="loginInterface" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

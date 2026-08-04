@@ -7,6 +7,9 @@ module app {
     requires employeeInterface;
     requires loginInterface;
     requires epiStockInterface;
+    requires org.slf4j;
+
+    opens br.com.app.app to ch.qos.logback.core;
 
 
     uses EmployeeInterface;

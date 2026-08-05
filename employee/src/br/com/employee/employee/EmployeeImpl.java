@@ -287,7 +287,8 @@ public class EmployeeImpl implements EmployeeInterface {
                     .removeIf(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
 
             if (isEmployee) {
-                IO.println("Funcionário deletado com sucesso!");
+                //TODO -> verificar depois
+                LOGGER.info("FUNCIONÁRIO DELETADO COM SUCESSO!");
                 IO.println("---------------------------------");
                 IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             }
@@ -408,8 +409,9 @@ public class EmployeeImpl implements EmployeeInterface {
                        sb.append("Menos de 1 dia");
                    }
 
-                          IO.println("Período trabalhado na empresa:");
-                   IO.println(sb.toString());
+                      LOGGER.info("PERÍODO TRABALHADO NA EMPRESA");
+                   String p = sb.toString();
+                      IO.println("                         " + p);
 
                           IO.println("-----------------------------------------------------------");
                   });

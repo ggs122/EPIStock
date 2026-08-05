@@ -191,6 +191,14 @@ public class EmployeeImpl implements EmployeeInterface {
                 LocalDate localHireDate = LocalDate.parse(hireDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 EmployeeImpl employee = new EmployeeImpl(employeeIdStatic++,employeeEnrollmentNumberStatic++, employeeFirstName, employeeMiddleName, employeeLastname, EmployeeUtils.returIdDefault(employeeIdNumber), EmployeeUtils.returnCpfDefault(employeeCpfNumber), EmployeeUtils.returnJoble_Title(chooseJobe_title), employeeSalary, localHireDate, terminationDate, EmployeeUtils.returnStatus(1));
                 employeeList.add(employee);
+                IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                IO.println("DADOS DA ADMISSÃO:");
+                employeeList
+                        .stream()
+                                .filter(e -> e.employeeIdNumber == employeeIdNumber && e.employeeCpfNumber == employeeCpfNumber)
+                                        .forEach(e -> IO.println(e));
+                LOGGER.info("ADMITIDO COM SUCESSO!!");
+                IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             } catch (DateTimeParseException d) {
                 IO.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
                 IO.println(String.format(localeBr, "Data formato inválido! Impossível cadastrar o funcionário: %s %s %s, Identidade Nº %s, CPF Nº %s", employeeFirstName, employeeMiddleName, employeeLastname, employeeIdNumber, employeeCpfNumber));
@@ -317,10 +325,12 @@ public class EmployeeImpl implements EmployeeInterface {
                                 e.terminationDate = terminationDateEmployeeLocalDate;
                             });
                     IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    IO.println("DADOS DA DEMISSÃO");
                     employeeList
                             .stream()
                             .filter(e -> e.employeeEnrollmentNumber == employeeEnrollmentNumber)
-                            .forEach(e -> IO.println(String.format(localeBr, "Funcionário: %s %s %s | Matrícula Nº : %d -> demitido com sucesso", e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.employeeEnrollmentNumber)));
+                            .forEach(e -> IO.println(String.format(localeBr, "Funcionário: %s %s %s | Matrícula Nº : %d", e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.employeeEnrollmentNumber)));
+                    LOGGER.info("DEMITIDO COM SUCESSO:.");
                     IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 } else {
                     IO.println("---------------------------------------------------------------------------------------------");
@@ -350,6 +360,7 @@ public class EmployeeImpl implements EmployeeInterface {
                     .stream()
                     .forEach(e -> IO.println(e));
             EmployeeImpl.loginEmployee();
+            IO.println("------------------------------------------------------------");
             LOGGER.info("Lista de empregados mostrada com sucesso!");
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }

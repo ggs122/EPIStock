@@ -5,6 +5,8 @@ module epiStock {
 
     requires epiStockInterface;
     requires employee;
+    requires java.logging;
+    requires org.slf4j;
     provides EpiStockInterface with EpiStockImpl;
 
 }

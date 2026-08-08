@@ -2,6 +2,8 @@ package br.com.epiStock.epiStock;
 
 import br.com.employee.employee.EmployeeImpl;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +26,7 @@ public class EpiStockImpl implements EpiStockInterface {
     private LocalDateTime ppeDeliveryDate = LocalDateTime.of(0001, 01, 01, 00, 00);
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
     DateTimeFormatter dateFormated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", localeBr);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EpiStockImpl.class);
 
     private long employeeEnrollmentNumber;
 
@@ -77,6 +80,8 @@ public class EpiStockImpl implements EpiStockInterface {
                if (isPpeProductCode && isppeCa && chechingIfSameAddPpeToStock(ppeProductCode, ppeCa) == false) {
                    EpiStockImpl epiStock = new EpiStockImpl(ppeIdStatic++, ppeProductCode, ppeName, ppeType, ppeCa, ppeDescriotion, ppeAmount);
                    epiStockList.add(epiStock);
+                   LOGGER.info(String.format(localeBr, "Faixa de estoque do Epi: Cód -> Ref: %s | EPI: %s | Tipo: %s | C.A: %s | Descrição: %s | Qtde: %d -> cadastrada com sucesso!", ppeProductCode, ppeName, ppeType, ppeCa, ppeDescriotion, ppeAmount));
+                   IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                } else {
                    IO.println(String.format("Código do produto %s e número do C.A %s -> Inválidos.", ppeProductCode, ppeCa));
                }
@@ -91,7 +96,8 @@ public class EpiStockImpl implements EpiStockInterface {
     @Override
     public void deleteAllEpiStock() {
         epiStockList.clear();
-        IO.println("Todos os epi's foram deletados do estoque com sucesso!");
+
+        LOGGER.info("Todos os EPI's foram deletados com sucesso!");
     }
 
     @Override
@@ -103,7 +109,7 @@ public class EpiStockImpl implements EpiStockInterface {
       if (isProductCode) {
           epiStockList
                   .removeIf(e -> e.ppeProductCode.equalsIgnoreCase(codRef));
-          IO.println(String.format(localeBr, "Epi, Ref: %s -> deletado com sucesso!", codRef));
+          LOGGER.info(String.format(localeBr, "Epi, Ref: %s -> deletado com sucesso!", codRef));
       } else {
           IO.println(String.format(localeBr, "Código de produto: %s -> inválido", codRef));
       }
@@ -123,7 +129,6 @@ public class EpiStockImpl implements EpiStockInterface {
        } else {
            IO.println("---------------------------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Epi Cód: Ref.%s | CA: %s -> cadastrado com sucesso!", ppeProductCode, ppeCa));
-           IO.println("-------------------------------------------------------------------------------------------------------");
        }
        return isSameEpi;
     }
@@ -178,6 +183,7 @@ public class EpiStockImpl implements EpiStockInterface {
             epiStockList
                     .stream()
                     .forEach(e -> IO.println(e));
+            LOGGER.info("Estoque de EPI's mostrado com sucesso!");
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             IO.println("Não existe EPIs cadastrados no sistema.");
@@ -211,6 +217,7 @@ public class EpiStockImpl implements EpiStockInterface {
                               .stream()
                               .filter(epis -> epis.employeeEnrollmentNumber == emll)
                               .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Cód: %s | Epi: %-25s | Tipo: %-15s | C.A %s | Descrição: %-35s | Qtde: %d | Date e hora da retirada: %s", e.ppeId, e.ppeProductCode, e.ppeName, e.ppeType, e.ppeCa, e.ppeDescriotion, e.ppeAmount, e.ppeDeliveryDate.format(dateFormated))));
+                      LOGGER.info("Sucesso!");
                       IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                   });
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -253,6 +260,7 @@ public class EpiStockImpl implements EpiStockInterface {
                      .mapToInt(e -> e.ppeAmount)
                      .sum();
              System.out.println(EpiTotal);
+             LOGGER.info("Sucesso!");
              IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
          } else {
              IO.println(String.format(localeBr, "Não houve nenhuma entrega de EPI com a matrícula: %d", employeeEnrollmentNumber));

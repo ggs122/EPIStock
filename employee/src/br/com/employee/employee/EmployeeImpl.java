@@ -242,6 +242,8 @@ public class EmployeeImpl implements EmployeeInterface {
                 System.out.println();
             }
         }
+        System.out.println();
+        LOGGER.info("Opções de profissões mostrada com sucesso!");
         IO.println("--------------------------------------------------------------------------------");
     }
 
@@ -256,7 +258,7 @@ public class EmployeeImpl implements EmployeeInterface {
           if (!employeeList.isEmpty()) {
 
               IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-              IO.println("Funcionário encontrado:");
+              LOGGER.info(String.format(localeBr, "Funcionário da Matrícula: %d -> ENCONTRADO COM SUCESSO!", employeeEnrollmentNumber));
               employeeList
                       .stream()
                       .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
@@ -275,22 +277,27 @@ public class EmployeeImpl implements EmployeeInterface {
     }
 
     @Override
-    public void deleteEmployee(int employeeEnrollmentNumber) {
+    public void deleteEmployee(long employeeEnrollmentNumber) {
         if (!employeeList.isEmpty()) {
             IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             employeeList
                     .stream()
                     .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
-                    .forEach(e -> IO.println(e));
+                    .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Matrícula: %d | Nome: %s %s %s | Função: %s", e.employeeId, e.employeeEnrollmentNumber, e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.getJobe_title())));
 
             boolean isEmployee = employeeList
-                    .removeIf(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
+                    .removeIf(
+                            e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber
+
+                    );
 
             if (isEmployee) {
                 //TODO -> verificar depois
-                LOGGER.info("FUNCIONÁRIO DELETADO COM SUCESSO!");
+                LOGGER.info(String.format(localeBr, "Funcionário Mat: %d -> DELETADO COM SUCESSO!", employeeEnrollmentNumber));
                 IO.println("---------------------------------");
                 IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            } else {
+                IO.println(String.format(localeBr, "Funcionário da Mat:%s -> INEXISTENTE", employeeEnrollmentNumber));
             }
         } else {
             IO.println("--------------------------------------------------");
@@ -444,7 +451,6 @@ public class EmployeeImpl implements EmployeeInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

@@ -2,6 +2,8 @@ package br.com.login.login;
 
 import br.com.employee.employee.EmployeeImpl;
 import br.com.loginInterface.loginInterface.LoginInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class LoginImpl implements LoginInterface {
     private String passwordReminder;
     private AuthenticationType authenticationType;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginImpl.class);
 
 
     private LoginImpl(long employeeEnrollmentNumber, String user, String password, String passwordReminder, AuthenticationType authenticationType) {
@@ -81,6 +84,7 @@ public class LoginImpl implements LoginInterface {
               } else {
                   LoginImpl login = new LoginImpl(employeeEnrollmentNumber, user,password, passwordReminder, LoginUtils.returnAuthenticationType(authenticationType));
                   loginList.add(login);
+                  LOGGER.info("Login cadastrado com seucesso!");
               }
           } else {
               IO.println("---------------------------------------------------------------------------------------------");
@@ -131,6 +135,7 @@ public class LoginImpl implements LoginInterface {
                             .stream()
                             .filter(l -> l.user.equals(user) && l.password.equals(password))
                             .forEach(l -> IO.println(l));
+                    LOGGER.info("Login mostrado com sucesso!");
                     IO.println("------------------------------------------------------------------------------------------------------");
                 } else {
                     IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -172,6 +177,7 @@ public class LoginImpl implements LoginInterface {
                                .forEach(l -> {
                                    l.user = newUserOtherEmployee;
                                    l.password = newPasswordOtherEmployee;
+                                   LOGGER.info("Login alterado com sucesso!");
                                });
 
                    } else {
@@ -229,6 +235,8 @@ public class LoginImpl implements LoginInterface {
 
                       });
 
+              LOGGER.info("Todos os logins forma mostrados com sucesso!");
+
               IO.println("-------------------------------------------------------------------------------------------------------");
           } else {
               IO.println("--------------------------------------------");
@@ -268,6 +276,7 @@ public class LoginImpl implements LoginInterface {
                             .stream()
                             .filter(e -> e.getEmployeeEnrollmentNumber() == otherEmployeeEnrollmentNumber)
                             .forEach(e -> IO.println(e));
+                    LOGGER.info("Login específico mostrado com sucesso!");
                     IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 } else {
@@ -303,6 +312,7 @@ public class LoginImpl implements LoginInterface {
                       .stream()
                       .filter(l -> l.passwordReminder == passwordReminder)
                       .forEach(l -> IO.println(l));
+              LOGGER.info("Login relembrado com sucesso!");
               IO.println("--------------------------------------------------------------------------------------------------------------------------");
           } else {
               IO.println(String.format(localeBr, "Lembrete de senha %s -> Inexistente!", passwordReminder));
@@ -334,7 +344,7 @@ public class LoginImpl implements LoginInterface {
 
                if (wasDeleted) {
                    IO.println("------------------------------------------------------------------------------");
-                   IO.println(String.format(localeBr, "Login -> Matrícula: %d -> deletado com sucesso!", otherEmployeeEnrollmentNumber));
+                   LOGGER.info(String.format(localeBr, "Login -> Matrícula: %d -> deletado com sucesso!", otherEmployeeEnrollmentNumber));
                    IO.println("------------------------------------------------------------------------------");
                } else {
                    IO.println("----------------------------------------------------------------------------------------");

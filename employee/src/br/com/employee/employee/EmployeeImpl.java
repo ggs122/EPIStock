@@ -371,12 +371,16 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
 
                                                 try {
                                                     SerializationUtils.toFile(e, file1);
+                                                    //TODO definir como e quando usar a descerialização.
+                                                    EmployeeImpl employee = SerializationUtils.fromFile(file1);
                                                 } catch (Exception e1) {
                                                     throw new RuntimeException(e1);
                                                 }
                             });
             EmployeeImpl.loginEmployee();
             IO.println("------------------------------------------------------------");
+            LOGGER.info("Serialização concluída com sucesso!");
+            LOGGER.info("Deserialização concluída com sucesso!");
             LOGGER.info("Lista de empregados mostrada com sucesso!");
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }

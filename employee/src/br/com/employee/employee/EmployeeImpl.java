@@ -357,19 +357,24 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         }
     }
 
-    //TODO implementando SerializationUtils
     @Override
     public void printEmployeeList() {
-        Path file = Path.of("file1.bin");
+        Path file1 = Path.of("file1.bin");
         if (!employeeList.isEmpty()) {
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> Lista de Funcionários <");
             employeeList
                     .stream()
                     .forEach(
-                            e -> IO.println(e),
-                            SerializationUtils.toFile(e, file)
-                    );
+                            e -> {
+                                        IO.println(e);
+
+                                                try {
+                                                    SerializationUtils.toFile(e, file1);
+                                                } catch (Exception e1) {
+                                                    throw new RuntimeException(e1);
+                                                }
+                            });
             EmployeeImpl.loginEmployee();
             IO.println("------------------------------------------------------------");
             LOGGER.info("Lista de empregados mostrada com sucesso!");

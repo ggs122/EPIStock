@@ -1,13 +1,11 @@
 package br.com.employee.employee;
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
+import br.com.serializationsutils.serializationutils.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +20,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-public class EmployeeImpl implements EmployeeInterface {
+public class EmployeeImpl implements EmployeeInterface, Serializable {
 
     public enum Jobe_Title {
         LANTERNAGEM(1), PINTURA(2), ESTOFADOR(3), ELETRICISTA(4), MECANICO(5), TEC_REFRI(6), MANOBRISTA(7), JATISTA(8), BORRACHEIRO(9), ABASTECEDOR(10), INEXISTENTE(11), GERENTE(12), GERENTE_R(13), INATIVO(14);
@@ -359,14 +357,19 @@ public class EmployeeImpl implements EmployeeInterface {
         }
     }
 
+    //TODO implementando SerializationUtils
     @Override
     public void printEmployeeList() {
+        Path file = Path.of("file1.bin");
         if (!employeeList.isEmpty()) {
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> Lista de Funcionários <");
             employeeList
                     .stream()
-                    .forEach(e -> IO.println(e));
+                    .forEach(
+                            e -> IO.println(e),
+                            SerializationUtils.toFile(e, file)
+                    );
             EmployeeImpl.loginEmployee();
             IO.println("------------------------------------------------------------");
             LOGGER.info("Lista de empregados mostrada com sucesso!");

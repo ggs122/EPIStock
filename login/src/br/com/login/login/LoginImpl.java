@@ -5,11 +5,12 @@ import br.com.loginInterface.loginInterface.LoginInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class LoginImpl implements LoginInterface {
+public class LoginImpl implements LoginInterface, Serializable {
 
     enum AuthenticationType {
         LOGIN, LOGIN_MASTER, INEXISTENTE

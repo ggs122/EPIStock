@@ -5,6 +5,7 @@ import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Locale;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class EpiStockImpl implements EpiStockInterface {
+public class EpiStockImpl implements EpiStockInterface, Serializable {
 
     private int ppeId;
     private static int ppeIdStatic = 1;

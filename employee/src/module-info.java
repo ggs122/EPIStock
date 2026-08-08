@@ -6,6 +6,7 @@ module employee {
 
     requires employeeInterface;
     requires org.slf4j;
+    requires serializationsutils;
 
     exports br.com.employee.employee;
 

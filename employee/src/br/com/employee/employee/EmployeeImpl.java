@@ -359,7 +359,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
 
     @Override
     public void printEmployeeList() {
-        Path file1 = Path.of("file1.bin");
+        Path file1 = Path.of("filePrintEmployee.bin");
         if (!employeeList.isEmpty()) {
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> Lista de Funcionários <");
@@ -367,12 +367,10 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
                     .stream()
                     .forEach(
                             e -> {
-                                        IO.println(e);
-
                                                 try {
                                                     SerializationUtils.toFile(e, file1);
-                                                    //TODO definir como e quando usar a descerialização.
                                                     EmployeeImpl employee = SerializationUtils.fromFile(file1);
+                                                    System.out.println(employee);
                                                 } catch (Exception e1) {
                                                     throw new RuntimeException(e1);
                                                 }
@@ -383,6 +381,26 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
             LOGGER.info("Deserialização concluída com sucesso!");
             LOGGER.info("Lista de empregados mostrada com sucesso!");
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        }
+    }
+
+    public void printTerminatioDateEmployee() {
+        Path file1 = Path.of("filePrintTerminationDateEmployee");
+        if (!employeeList.isEmpty()) {
+            IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            IO.println("> FUNCIONÁRIOS DEMITIDOS: <");
+            employeeList
+                    .stream()
+                    .filter(e -> e.is_Active.equals(Status.Inativo))
+                    .forEach(e -> {
+                        try {
+                            SerializationUtils.toFile(e, file1);
+                           EmployeeImpl terminationDateEmployee = SerializationUtils.fromFile(file1);
+                            System.out.println(terminationDateEmployee);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
         }
     }
 
@@ -460,6 +478,31 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
                         }
                     });
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void loginTerminateDataEmployee() {
+        File terminationDateEmployeePathToFile = new File("terminationDateEmployeeLogin");
+        if (!terminationDateEmployeePathToFile.exists()) {
+            terminationDateEmployeePathToFile.mkdir();
+        }
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("terminationDateEmployeeLogin/Login.txt"))) {
+            bw.write("> Funcionários demitidos <");
+            bw.newLine();
+            bw.newLine();
+            employeeList
+                    .stream()
+                    .filter(e -> e.is_Active.equals(Status.Inativo))
+                    .forEach(e -> {
+                        try {
+                            bw.write(e.toString().concat("\n"));
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

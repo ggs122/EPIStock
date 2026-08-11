@@ -21,6 +21,7 @@ public class AppTest1 {
         employee1.deleteEmployee(1000);
         employee1.findEmployee(1001);
         employee1.printEmployeeList();
+        employee1.printTerminatioDateEmployee();
 
        LoginInterface login1 = ServiceLoader.load(LoginInterface.class).findFirst().orElseThrow();
        login1.createLogin(1000, "Soares", "S.123456", "Niver", 1);

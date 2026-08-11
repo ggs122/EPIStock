@@ -8,4 +8,5 @@ public interface EmployeeInterface {
     void  calculateTenure(long employeeEnrollmentNumber);
     void showJobe_title();
     void printEmployeeList();
+    void printTerminatioDateEmployee();
 }

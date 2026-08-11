@@ -384,6 +384,8 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         }
     }
 
+    //TODO criar um construtor copy, criar uma lista de funcionários demitidos e adicionar os demitidos no método de demitir.
+    @Override
     public void printTerminatioDateEmployee() {
         Path file1 = Path.of("filePrintTerminationDateEmployee");
         if (!employeeList.isEmpty()) {
@@ -401,6 +403,12 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
                             throw new RuntimeException(ex);
                         }
                     });
+            EmployeeImpl.loginTerminateDataEmployee();
+            IO.println("------------------------------------------------------------");
+            LOGGER.info("Ser. concluída com sucesso!");
+            LOGGER.info("Des. concluída com sucesso!");
+            LOGGER.info("Lista de empregados demitidos mostrada com sucesso!");
+            IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 

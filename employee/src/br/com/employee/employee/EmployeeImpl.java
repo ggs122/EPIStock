@@ -79,9 +79,28 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         this.newSalaryFormated = numberFormat.format(employeeSalary);
     }
 
+    private EmployeeImpl(EmployeeImpl other) {
+        this.employeeId = other.employeeId;
+        this.employeeEnrollmentNumber = other.employeeEnrollmentNumber;
+        this.employeeFirstName = other.employeeFirstName;
+        this.employeeMiddleName = other.employeeMiddleName;
+        this.employeeLastname = other.employeeLastname;
+        this.employeeIdNumber = other.employeeIdNumber;
+        this.employeeCpfNumber = other.employeeCpfNumber;
+        this.jobe_title = other.jobe_title;
+        this.employeeSalary = other.employeeSalary;
+        this.hireDate = other.hireDate;
+        this.terminationDate = other.terminationDate;
+        this.is_Active = other.is_Active;
+        this.numberFormat = NumberFormat.getCurrencyInstance();
+        this.numberFormat.setCurrency(Currency.getInstance(currency));
+        this.newSalaryFormated = numberFormat.format(employeeSalary);
+    }
+
     public EmployeeImpl() {}
 
-   public static List<EmployeeImpl> employeeList = new ArrayList<>();
+    static List<EmployeeImpl> employeeList = new ArrayList<>();
+    static List<EmployeeImpl> employeeHireDateList = new ArrayList<>();
 
     EmployeeImpl.Jobe_Title [][] jobeTitle = new EmployeeImpl.Jobe_Title[5][3];
 

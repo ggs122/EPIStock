@@ -300,7 +300,13 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
             employeeList
                     .stream()
                     .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
-                    .forEach(e -> IO.println(String.format(localeBr, "Id: %d | Matrícula: %d | Nome: %s %s %s | Função: %s", e.employeeId, e.employeeEnrollmentNumber, e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.getJobe_title())));
+                    .forEach(e -> {
+                        IO.println(String.format(localeBr, "Id: %d | Matrícula: %d | Nome: %s %s %s | Função: %s", e.employeeId, e.employeeEnrollmentNumber, e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.getJobe_title()));
+                        EmployeeImpl employee = new EmployeeImpl(e);
+                        employeeHireDateList.add(employee);
+
+                    });
+
 
             boolean isEmployee = employeeList
                     .removeIf(
@@ -309,7 +315,6 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
                     );
 
             if (isEmployee) {
-                //TODO -> verificar depois
                 LOGGER.info(String.format(localeBr, "Funcionário Mat: %d -> DELETADO COM SUCESSO!", employeeEnrollmentNumber));
                 IO.println("---------------------------------");
                 IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
@@ -403,14 +408,13 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         }
     }
 
-    //TODO criar um construtor copy, criar uma lista de funcionários demitidos e adicionar os demitidos no método de demitir.
     @Override
     public void printTerminatioDateEmployee() {
         Path file1 = Path.of("filePrintTerminationDateEmployee");
-        if (!employeeList.isEmpty()) {
+        if (!employeeHireDateList.isEmpty()) {
             IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             IO.println("> FUNCIONÁRIOS DEMITIDOS: <");
-            employeeList
+            employeeHireDateList
                     .stream()
                     .filter(e -> e.is_Active.equals(Status.Inativo))
                     .forEach(e -> {
@@ -520,7 +524,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
             bw.write("> Funcionários demitidos <");
             bw.newLine();
             bw.newLine();
-            employeeList
+            employeeHireDateList
                     .stream()
                     .filter(e -> e.is_Active.equals(Status.Inativo))
                     .forEach(e -> {

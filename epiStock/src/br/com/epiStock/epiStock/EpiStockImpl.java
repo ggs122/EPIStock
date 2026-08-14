@@ -6,7 +6,7 @@ import br.com.serializationsutils.serializationutils.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
+import java.io.*;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -190,6 +190,7 @@ public class EpiStockImpl implements EpiStockInterface, Serializable {
                         System.out.println(e);
                     });
             LOGGER.info("Estoque de EPI's mostrado com sucesso!");
+            EpiStockImpl.loginEpiStock();
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             IO.println("Não existe EPIs cadastrados no sistema.");
@@ -226,6 +227,7 @@ public class EpiStockImpl implements EpiStockInterface, Serializable {
                       LOGGER.info("Sucesso!");
                       IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                   });
+          EpiStockImpl.loginEpiStockUsed();
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             IO.println("Nenhum epi foi usado ainda");
@@ -275,6 +277,54 @@ public class EpiStockImpl implements EpiStockInterface, Serializable {
          IO.println(String.format(localeBr, "Funcionário com a matrícula: %d -> inexistente!", employeeEnrollmentNumber));
      }
 
+    }
+
+    private static void loginEpiStock() {
+        File fileLoginEpiStock = new File("EpiStockLogin");
+        if (!fileLoginEpiStock.exists()) {
+            fileLoginEpiStock.mkdir();
+        }
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("EpiStockLogin/epiStockLogin.txt"))) {
+            bw.write("Estoque de Epi");
+            bw.newLine();
+            bw.newLine();
+            epiStockList
+                    .stream()
+                    .forEach(e -> {
+                        try {
+                            bw.write(e.toString().concat("\n"));
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void loginEpiStockUsed() {
+        File fileLoginEpiStock = new File("EpiStockLogin");
+        if (!fileLoginEpiStock.exists()) {
+            fileLoginEpiStock.mkdir();
+        }
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("EpiStockLogin/listEpisUsedsLogin.txt"))) {
+            bw.write("Lista de Epi's usados");
+            bw.newLine();
+            bw.newLine();
+            epiStockRegisterUsedsList
+                    .stream()
+                    .forEach(e -> {
+                        try {
+                            bw.write(e.toString().concat("\n"));
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

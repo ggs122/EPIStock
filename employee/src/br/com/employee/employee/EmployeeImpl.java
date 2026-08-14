@@ -515,12 +515,12 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
     }
 
     private static void loginTerminateDataEmployee() {
-        File terminationDateEmployeePathToFile = new File("terminationDateEmployeeLogin");
+        File terminationDateEmployeePathToFile = new File("EmployeeLogin");
         if (!terminationDateEmployeePathToFile.exists()) {
             terminationDateEmployeePathToFile.mkdir();
         }
 
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter("terminationDateEmployeeLogin/Login.txt"))) {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("EmployeeLogin/LoginTerminateDataEmployee.txt"))) {
             bw.write("> Funcionários demitidos <");
             bw.newLine();
             bw.newLine();

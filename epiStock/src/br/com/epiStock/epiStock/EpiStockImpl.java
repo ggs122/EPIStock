@@ -2,10 +2,12 @@ package br.com.epiStock.epiStock;
 
 import br.com.employee.employee.EmployeeImpl;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
+import br.com.serializationsutils.serializationutils.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -183,7 +185,10 @@ public class EpiStockImpl implements EpiStockInterface, Serializable {
             IO.println("> Estoque de EPI <");
             epiStockList
                     .stream()
-                    .forEach(e -> IO.println(e));
+                    .forEach(e -> {
+
+                        System.out.println(e);
+                    });
             LOGGER.info("Estoque de EPI's mostrado com sucesso!");
             IO.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {

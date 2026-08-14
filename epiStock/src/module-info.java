@@ -7,6 +7,7 @@ module epiStock {
     requires employee;
     requires java.logging;
     requires org.slf4j;
+    requires serializationsutils;
     provides EpiStockInterface with EpiStockImpl;
 
 }

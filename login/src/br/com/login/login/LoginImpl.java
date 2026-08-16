@@ -1,5 +1,6 @@
 package br.com.login.login;
 
+import br.com.employeInterface.employeeInterface.EmployeeInterface;
 import br.com.employee.employee.EmployeeImpl;
 import br.com.loginInterface.loginInterface.LoginInterface;
 import org.slf4j.Logger;
@@ -23,6 +24,11 @@ public class LoginImpl implements LoginInterface, Serializable {
     private AuthenticationType authenticationType;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginImpl.class);
+    private EmployeeInterface employee;
+
+    public void setEmployee(EmployeeInterface employee) {
+        this.employee = employee;
+    }
 
 
     private LoginImpl(long employeeEnrollmentNumber, String user, String password, String passwordReminder, AuthenticationType authenticationType) {
@@ -372,21 +378,22 @@ public class LoginImpl implements LoginInterface, Serializable {
     }
 
     //TODO parei aqui.
-    protected static boolean loginOne(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
-        LoginImpl login = new LoginImpl();
-       return login.login(myEmployeeEnrollmentNumber, myUser, myPassword);
+
+    @Override
+    public boolean loginOne(String myUser, String myPassword) {
+       return login(myUser, myPassword);
     }
 
-    //TODO parei aqui.
-    private boolean login(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
+    //TODO Revisar lógica.
+    private boolean login(String myUser, String myPassword) {
        boolean isLogin = loginList
                 .stream()
-                .anyMatch(e -> e.employeeEnrollmentNumber == myEmployeeEnrollmentNumber && e.user.equals(myUser.trim()) && e.password.equals(myPassword.trim()));
+                .anyMatch(e -> e.user.equals(myUser.trim()) && e.password.equals(myPassword.trim()));
 
        if (isLogin) {
            IO.println("Login -> Sucesso!");
        } else {
-           IO.println("Login -> Falhou");
+           IO.println("Login -> Falhou!");
        }
 
        return isLogin;

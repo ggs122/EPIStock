@@ -12,13 +12,17 @@ public class AppTest1 {
     static void main(String[] args) {
 
         var employee1 = ServiceLoader.load(EmployeeInterface.class).findFirst().orElseThrow();
+        var login = ServiceLoader.load(LoginInterface.class).findFirst().orElseThrow();
+        employee1.setLoginService(login);
+
+
         employee1.createEmployee("Soares", "Lima", "de Albuquerque", "30.149.155-3", "089.365.987-70", 1, 3000, "15/05/1990");
         employee1.createEmployee("Iracilda", "Lima", "Almeida", "20.169.255-5", "055.056.718-65", 2, 2500, "17/07/2020");
         employee1.createEmployee("Fernanda", "Souza", "Almeida", "20.169.255-6", "055.056.718-67", 3, 2500, "23/03/2026");
         employee1.createEmployee("Ivanildo", "Lima", "de Souza","30.135.356-9", "060.055.817-99",13, 7500, "15/08/1999");
         employee1.createEmployee("Rogério", "Lopes", "Martins", "22.567.333-8", "135.065.255-90", 12, 12500, "15/08/1989");
         employee1.terminationDateEmployee(1000, "15/09/1996");
-        employee1.deleteEmployee(1000);
+        employee1.deleteEmployee(1000, "Iracilda", "I.654321");
         employee1.findEmployee(1001);
         employee1.printEmployeeList();
         employee1.printTerminatioDateEmployee();

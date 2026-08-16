@@ -1,6 +1,7 @@
 package br.com.employee.employee;
 
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
+import br.com.loginInterface.loginInterface.LoginInterface;
 import br.com.serializationsutils.serializationutils.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,10 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
     private LocalDate terminationDate = LocalDate.of(0001, 01, 01);
     private Status is_Active;
 
+    private String user;
+    private String password;
+    private LoginInterface loginService;
+
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
     private final String currency = "BRL";
     private NumberFormat numberFormat;
@@ -95,6 +100,11 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         this.numberFormat = NumberFormat.getCurrencyInstance();
         this.numberFormat.setCurrency(Currency.getInstance(currency));
         this.newSalaryFormated = numberFormat.format(employeeSalary);
+    }
+
+    private EmployeeImpl(String user, String password) {
+        this.user = user;
+        this.password = password;
     }
 
     public EmployeeImpl() {}
@@ -293,8 +303,9 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
       }
     }
 
+    //TODO Revisar lógica
     @Override
-    public void deleteEmployee(long employeeEnrollmentNumber) {
+    public void deleteEmployee(long employeeEnrollmentNumber, String user, String password) {
         if (!employeeList.isEmpty()) {
             IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             employeeList
@@ -311,6 +322,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
             boolean isEmployee = employeeList
                     .removeIf(
                             e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber
+                            && employeeLoginImpl(user, password) == true
 
                     );
 
@@ -537,6 +549,15 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean employeeLoginImpl(String myUser, String myPassword) {
+        return loginService.loginOne(myUser, myPassword);
+    }
+
+    @Override
+    public void setLoginService(LoginInterface loginService) {
+        this.loginService = loginService;
     }
 
     @Override

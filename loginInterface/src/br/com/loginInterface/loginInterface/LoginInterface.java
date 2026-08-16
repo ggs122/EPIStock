@@ -9,5 +9,6 @@ public interface LoginInterface {
     void deleteLogin(long otherEmployeeEnrollmentNumber, String myUser, String myPassword);
     void rememberLogin(String passwordReminder);
     void showLogins(String user, String password);
+    boolean loginOne(String myUser, String myPassword);
 
 }

@@ -380,15 +380,15 @@ public class LoginImpl implements LoginInterface, Serializable {
     //TODO parei aqui.
 
     @Override
-    public boolean loginOne(String myUser, String myPassword) {
-       return login(myUser, myPassword);
+    public boolean loginOne(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
+       return login(myEmployeeEnrollmentNumber, myUser, myPassword);
     }
 
     //TODO Revisar lógica.
-    private boolean login(String myUser, String myPassword) {
+    private boolean login(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
        boolean isLogin = loginList
                 .stream()
-                .anyMatch(e -> e.user.equals(myUser.trim()) && e.password.equals(myPassword.trim()));
+                .anyMatch(e -> e.employeeEnrollmentNumber == myEmployeeEnrollmentNumber && e.user.equals(myUser) && e.password.equals(myPassword));
 
        if (isLogin) {
            IO.println("Login -> Sucesso!");

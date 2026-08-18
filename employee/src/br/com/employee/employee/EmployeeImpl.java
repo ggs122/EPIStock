@@ -305,12 +305,12 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
 
     //TODO Revisar lógica
     @Override
-    public void deleteEmployee(long employeeEnrollmentNumber, String user, String password) {
+    public void deleteEmployee(long myEmployeeEnrollmentNumber, String myUser, String myPassword, long employeeEnrollmentNumberForDetele) {
         if (!employeeList.isEmpty()) {
             IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             employeeList
                     .stream()
-                    .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
+                    .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumberForDetele)
                     .forEach(e -> {
                         IO.println(String.format(localeBr, "Id: %d | Matrícula: %d | Nome: %s %s %s | Função: %s", e.employeeId, e.employeeEnrollmentNumber, e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.getJobe_title()));
                         EmployeeImpl employee = new EmployeeImpl(e);
@@ -321,15 +321,19 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
 
             boolean isEmployee = employeeList
                     .removeIf(
-                            e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber
-                            && employeeLoginImpl(user, password) == true
-
+                            e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumberForDetele &&
+                                    employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword) == true
                     );
 
             if (isEmployee) {
-                LOGGER.info(String.format(localeBr, "Funcionário Mat: %d -> DELETADO COM SUCESSO!", employeeEnrollmentNumber));
-                IO.println("---------------------------------");
-                IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                if (employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword) == true) {
+                    LOGGER.info(String.format(localeBr, "Funcionário Mat: %d -> DELETADO COM SUCESSO!", employeeEnrollmentNumber));
+                    IO.println("---------------------------------");
+                    IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                } else {
+                    IO.println("Usuário e senha não conferem!");
+                }
+
             } else {
                 IO.println(String.format(localeBr, "Funcionário da Mat:%s -> INEXISTENTE", employeeEnrollmentNumber));
             }
@@ -551,8 +555,8 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         }
     }
 
-    private boolean employeeLoginImpl(String myUser, String myPassword) {
-        return loginService.loginOne(myUser, myPassword);
+    private boolean employeeLoginImpl(long myemployeeEnrollmentNumber, String myUser, String myPassword) {
+        return loginService.loginOne(myemployeeEnrollmentNumber, myUser, myPassword);
     }
 
     @Override

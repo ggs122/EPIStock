@@ -111,7 +111,8 @@ public class LoginImpl implements LoginInterface, Serializable {
                 .stream()
                 .filter(l -> l.user.equals(user) && l.password.equals(password))
                 .mapToLong(l -> l.employeeEnrollmentNumber)
-                .sum();
+                .findFirst()
+            .orElse(0);
 
   var isStatusList = employeeList
             .stream()
@@ -122,7 +123,7 @@ public class LoginImpl implements LoginInterface, Serializable {
 
          boolean isActive = isStatusList
                   .stream()
-                  .anyMatch(i -> i == EmployeeImpl.Status.Ativo);
+                  .anyMatch(i -> i.equals(EmployeeImpl.Status.Ativo));
 
         return isActive;
     }
@@ -317,7 +318,7 @@ public class LoginImpl implements LoginInterface, Serializable {
               IO.println("Login do funcionário:");
               loginList
                       .stream()
-                      .filter(l -> l.passwordReminder == passwordReminder)
+                      .filter(l -> l.passwordReminder.equals(passwordReminder))
                       .forEach(l -> IO.println(l));
               LOGGER.info("Login relembrado com sucesso!");
               IO.println("--------------------------------------------------------------------------------------------------------------------------");

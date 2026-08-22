@@ -321,8 +321,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
 
             boolean isEmployee = employeeList
                     .removeIf(
-                            e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumberForDetele &&
-                                    employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword) == true
+                            e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumberForDetele
                     );
 
             if (isEmployee) {

@@ -325,7 +325,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
                     );
 
             if (isEmployee) {
-                if (employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword) == true) {
+                if (employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword) == false) {
                     LOGGER.info(String.format(localeBr, "Funcionário Mat: %d -> DELETADO COM SUCESSO!", employeeEnrollmentNumber));
                     IO.println("---------------------------------");
                     IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");

@@ -389,12 +389,14 @@ public class LoginImpl implements LoginInterface, Serializable {
     private boolean login(long myEmployeeEnrollmentNumber, String myUser, String myPassword) {
        boolean isLogin = loginList
                 .stream()
-                .anyMatch(e -> e.employeeEnrollmentNumber == myEmployeeEnrollmentNumber && e.user.equals(myUser) && e.password.equals(myPassword));
+                .anyMatch(e -> myEmployeeEnrollmentNumber == e.employeeEnrollmentNumber && myUser.equals(e.user) && myPassword.equals(e.password));
 
-       if (isLogin) {
+       if (isLogin == true) {
            IO.println("Login -> Sucesso!");
        } else {
-           IO.println("Login -> Falhou!");
+           if (isLogin == false) {
+               IO.println("Login -> Falhou!");
+           }
        }
 
        return isLogin;

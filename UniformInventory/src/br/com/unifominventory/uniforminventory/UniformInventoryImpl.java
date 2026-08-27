@@ -56,7 +56,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
 
     public void createUniformInventory(long uniformAmountG, String uniformGCode, long uniformAmountGg, String uniformGgCode, long uniformAmountM, String uniformMCode, long uniformAmountP, String uniformPCode, long uniformAmountPp, String uniformPpCode, int uniformType) {
 
-        UniformInventoryImpl uniformInventory = new UniformInventoryImpl(uniformStaticId++, uniformAmountG, uniformGCode, uniformAmountGg, uniformGgCode, uniformAmountM, uniformMCode, uniformAmountP, uniformPCode, uniformAmountPp, uniformPpCode, UniformInventoryImplEnum.returnUniformType(uniformType))
+        UniformInventoryImpl uniformInventory = new UniformInventoryImpl(uniformStaticId++, uniformAmountG, uniformGCode, uniformAmountGg, uniformGgCode, uniformAmountM, uniformMCode, uniformAmountP, uniformPCode, uniformAmountPp, uniformPpCode, UniformInventoryImplEnum.returnUniformType(uniformType));
 
     }
 }

@@ -59,4 +59,22 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
         UniformInventoryImpl uniformInventory = new UniformInventoryImpl(uniformStaticId++, uniformAmountG, uniformGCode, uniformAmountGg, uniformGgCode, uniformAmountM, uniformMCode, uniformAmountP, uniformPCode, uniformAmountPp, uniformPpCode, UniformInventoryImplEnum.returnUniformType(uniformType));
 
     }
+
+    @Override
+    public String toString() {
+        return "UniformInventoryImpl{" +
+                "uniformId=" + uniformId +
+                ", uniformAmountG=" + uniformAmountG +
+                ", uniformGCode='" + uniformGCode + '\'' +
+                ", uniformAmountGg=" + uniformAmountGg +
+                ", uniformGgCode='" + uniformGgCode + '\'' +
+                ", uniformAmountM=" + uniformAmountM +
+                ", uniformMCode='" + uniformMCode + '\'' +
+                ", uniformAmountP=" + uniformAmountP +
+                ", uniformPCode='" + uniformPCode + '\'' +
+                ", uniformAmountPp=" + uniformAmountPp +
+                ", uniformPpCode='" + uniformPpCode + '\'' +
+                ", uniformType=" + uniformType +
+                '}';
+    }
 }

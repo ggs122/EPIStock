@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="module" module-name="employee" />
     <orderEntry type="module" module-name="uniforminventoryinterface" />
     <orderEntry type="module" module-name="employeeInterface" />
     <orderEntry type="module" module-name="loginInterface" />

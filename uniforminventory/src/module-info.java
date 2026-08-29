@@ -7,6 +7,7 @@ module uniforminventory {
     requires employeeInterface;
     requires loginInterface;
     requires epiStockInterface;
+    requires transitive employee;
 
     provides UniformInventoryInterface with UniformInventoryImpl;
 

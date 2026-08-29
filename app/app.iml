@@ -7,13 +7,15 @@
       <sourceFolder url="file://$MODULE_DIR$/src/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="module" module-name="uniformInventory" />
+    <orderEntry type="module" module-name="login" />
     <orderEntry type="module" module-name="epiStock" />
     <orderEntry type="module" module-name="epiStockInterface" />
-    <orderEntry type="module" module-name="login" />
     <orderEntry type="module" module-name="loginInterface" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="employeeInterface" />
     <orderEntry type="module" module-name="employee" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module" module-name="uniforminventoryinterface" />
   </component>
 </module>

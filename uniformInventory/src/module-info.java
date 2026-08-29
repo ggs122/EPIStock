@@ -1,8 +1,6 @@
 module UniformInventory {
 
-
-
-    requires uniformInventoryInterface;
+    requires uniforminventoryinterface;
     requires transitive loginInterface;
     requires employeeInterface;
     requires epiStockInterface;

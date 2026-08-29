@@ -1,7 +1,7 @@
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
 import br.com.loginInterface.loginInterface.LoginInterface;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
-
+import br.com.uniforminventoryinterface.UniformInventoryInterface;
 
 
 module app {
@@ -13,7 +13,7 @@ module app {
 
 
 
-//    requires uniforminventoryinterface;
+    requires uniforminventoryinterface;
 
 
 
@@ -25,6 +25,7 @@ module app {
     uses EmployeeInterface;
     uses LoginInterface;
     uses EpiStockInterface;
+    uses UniformInventoryInterface;
 
 
 

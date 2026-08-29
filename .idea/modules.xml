@@ -11,6 +11,8 @@
       <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
       <module fileurl="file://$PROJECT_DIR$/loginInterface/loginInterface.iml" filepath="$PROJECT_DIR$/loginInterface/loginInterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/serializationsutils/serializationsutils.iml" filepath="$PROJECT_DIR$/serializationsutils/serializationsutils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uniforminventory/uniforminventory.iml" filepath="$PROJECT_DIR$/uniforminventory/uniforminventory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uniforminventoryinterface/uniforminventoryinterface.iml" filepath="$PROJECT_DIR$/uniforminventoryinterface/uniforminventoryinterface.iml" />
     </modules>
   </component>
 </project>

@@ -4,6 +4,7 @@ package br.com.app.app;
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
 import br.com.loginInterface.loginInterface.LoginInterface;
+import br.com.uniforminventoryinterface.UniformInventoryInterface;
 
 import java.util.ServiceLoader;
 
@@ -77,6 +78,18 @@ public class AppTest1 {
         stock1.printSpecificEpiUsed(1001);
 
         employee1.calculateTenure(1000);
+
+        UniformInventoryInterface uniformInventory1 = ServiceLoader.load(UniformInventoryInterface.class).findFirst().orElseThrow();
+
+        uniformInventory1.addSpecificUniformInTheInventory(25, "25.056", 1, 3);
+        uniformInventory1.addSpecificUniformInTheInventory(50, "25.057", 2, 4);
+        uniformInventory1.addSpecificUniformInTheInventory(75, "25.058", 1, 2);
+        uniformInventory1.addSpecificUniformInTheInventory(35, "25.059", 1, 1);
+        uniformInventory1.addSpecificUniformInTheInventory(35, "25.060", 2, 1);
+        uniformInventory1.addSpecificUniformInTheInventory(100,"25.061", 2, 2);
+        uniformInventory1.printUniformInventory();
+        uniformInventory1.uniformDelivery(1001, "25.057", 1, 2, 1);
+        uniformInventory1.printUniformInventory();
 
     }
 }

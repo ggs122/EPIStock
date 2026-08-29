@@ -275,7 +275,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
     }
 
     @Override
-    public void findEmployee(int employeeEnrollmentNumber) {
+    public boolean findEmployee(long employeeEnrollmentNumber) {
 
       boolean isEmployee = employeeList
                 .stream()
@@ -301,6 +301,8 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
           IO.println(String.format(localeBr, "Matrícula %d -> Inexistente!!", employeeEnrollmentNumber));
           IO.println("-----------------------------------------------------------");
       }
+
+      return isEmployee;
     }
 
     //TODO Revisar lógica

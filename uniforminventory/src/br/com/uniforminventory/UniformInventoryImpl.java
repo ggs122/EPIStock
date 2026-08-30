@@ -154,6 +154,16 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
         }
     }
 
+    public void deleteSpecificUniform(String uniformCode) {
+        if (!uniformInventoryList.isEmpty()) {
+            uniformInventoryList
+                    .removeIf(u -> u.uniformCode.equals(uniformCode));
+            IO.println(String.format(localeBr, "Todos os uniformes desse lote, com código %s -> Foram deletados com sucesso!", uniformCode));
+        } else {
+            IO.println("Não a uniformes no estoque -> Cadastre!");
+        }
+    }
+
     @Override
     public String toString() {
         return String.format(localeBr, "ID: %d | Ref - %s | Tipo: %-20s | Tamanho: %-2s | Qtde: %d", uniformId, uniformCode ,uniformType, uniformSize, uniformAmount);

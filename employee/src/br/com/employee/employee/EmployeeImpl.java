@@ -305,6 +305,38 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
       return isEmployee;
     }
 
+    @Override
+    public boolean findEmployeeSomeDates(long employeeEnrollmentNumber) {
+
+        boolean isEmployee = employeeList
+                .stream()
+                .anyMatch(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber);
+
+        if (isEmployee) {
+            if (!employeeList.isEmpty()) {
+
+                IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                LOGGER.info(String.format(localeBr, "Funcionário da Matrícula: %d -> ENCONTRADO COM SUCESSO!", employeeEnrollmentNumber));
+                employeeList
+                        .stream()
+                        .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
+                        .forEach(e -> IO.println(String.format(localeBr, "Mat: %d | Nome: %s %s %s | Cargo: %s | Status %s", e.employeeEnrollmentNumber, e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.jobe_title, e.is_Active)));
+                IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            } else {
+                IO.println("--------------------------------------------------");
+                IO.println("Não há clientes cadastrados no sistema -> Cadastre");
+                IO.println("--------------------------------------------------");
+            }
+        } else {
+            IO.println("-----------------------------------------------------------");
+            IO.println(String.format(localeBr, "Matrícula %d -> Inexistente!!", employeeEnrollmentNumber));
+            IO.println("-----------------------------------------------------------");
+        }
+
+        return isEmployee;
+    }
+
+
     //TODO Revisar lógica
     @Override
     public void deleteEmployee(long myEmployeeEnrollmentNumber, String myUser, String myPassword, long employeeEnrollmentNumberForDetele) {
@@ -327,7 +359,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
                     );
 
             if (isEmployee) {
-                if (employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword) == false) {
+                if (employeeLoginImpl(myEmployeeEnrollmentNumber, myUser, myPassword)) {
                     LOGGER.info(String.format(localeBr, "Funcionário Mat: %d -> DELETADO COM SUCESSO!", employeeEnrollmentNumber));
                     IO.println("---------------------------------");
                     IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");

@@ -24,11 +24,7 @@ public class LoginImpl implements LoginInterface, Serializable {
     private AuthenticationType authenticationType;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginImpl.class);
-    private EmployeeInterface employee;
-
-    public void setEmployee(EmployeeInterface employee) {
-        this.employee = employee;
-    }
+    private EmployeeInterface employeeService = new EmployeeImpl();
 
 
     private LoginImpl(long employeeEnrollmentNumber, String user, String password, String passwordReminder, AuthenticationType authenticationType) {
@@ -391,7 +387,10 @@ public class LoginImpl implements LoginInterface, Serializable {
                 .stream()
                 .anyMatch(e -> myEmployeeEnrollmentNumber == e.employeeEnrollmentNumber && myUser.equals(e.user) && myPassword.equals(e.password));
 
-       if (isLogin == true) {
+        employeeService
+                .findEmployeeSomeDates(myEmployeeEnrollmentNumber);
+
+       if (isLogin) {
            IO.println("Login -> Sucesso!");
        } else {
            if (isLogin == false) {

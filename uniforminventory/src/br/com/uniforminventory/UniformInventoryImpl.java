@@ -3,6 +3,7 @@ package br.com.uniforminventory;
 import br.com.employeInterface.employeeInterface.EmployeeInterface;
 import br.com.employee.employee.EmployeeImpl;
 import br.com.epiStockInterface.epiStockInterface.EpiStockInterface;
+import br.com.login.login.LoginImpl;
 import br.com.loginInterface.loginInterface.LoginInterface;
 import br.com.uniforminventoryinterface.UniformInventoryInterface;
 
@@ -27,7 +28,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
     private EmployeeInterface employeeService = new EmployeeImpl();
-    private LoginInterface loginService;
+    private LoginInterface loginService = new LoginImpl();
     private EpiStockInterface epiService;
 
     static List<UniformInventoryImpl> uniformInventoryList = new ArrayList<>();
@@ -83,7 +84,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
     public void uniformDelivery(long employeeEnrollmentNumber, String uniformCode, long uniformAmount, int uniformType, int uniformSize) {
 
 
-        if (employeeService.findEmployee(employeeEnrollmentNumber)) {
+        if (employeeService.findEmployeeSomeDates(employeeEnrollmentNumber)) {
             if (uniformAmount > 0) {
 
                 if (isUniformeCode(uniformCode)) {

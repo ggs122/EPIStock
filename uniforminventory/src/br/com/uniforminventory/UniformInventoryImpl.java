@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 public class UniformInventoryImpl implements UniformInventoryInterface {
 
@@ -81,7 +82,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
     }
 
     @Override
-    public void uniformDelivery(long employeeEnrollmentNumber, String uniformCode, long uniformAmount, int uniformType, int uniformSize) {
+    public void uniformDelivery(long employeeEnrollmentNumber, String uniformCode, long uniformAmount) {
 
 
         if (employeeService.findEmployeeSomeDates(employeeEnrollmentNumber)) {
@@ -89,10 +90,24 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
 
                 if (isUniformeCode(uniformCode)) {
                     if (isSuficienteAmountSpecificUniform(uniformCode, uniformAmount)) {
-                        UniformInventoryImpl uniformInventory = new UniformInventoryImpl(employeeEnrollmentNumber, uniformCode, uniformAmount, UniformInventoryImplEnumUtils.UniformType.returnUniformType(uniformType), UniformInventoryImplEnumUtils.UniformSize.returnUniformSize(uniformSize));
-                        deliveryUniformUsedList.add(uniformInventory);
+
+                       uniformInventoryList
+                                .stream()
+                                        .filter(u -> u.uniformCode.equals(uniformCode))
+                                                .forEach(u -> {
+                                                    UniformInventoryImpl uniformInventory = new UniformInventoryImpl(employeeEnrollmentNumber, uniformCode,uniformAmount, u.uniformType, u.uniformSize);
+                                                    deliveryUniformUsedList.add(uniformInventory);
+                                                });
+
                         minusAmountSpecificUniform(uniformCode, uniformAmount);
+
+                        deliveryUniformUsedList
+                                .stream()
+                                .filter(d -> d.employeeEnrollmentNumber == employeeEnrollmentNumber)
+                                .forEach(d -> IO.println(String.format(localeBr, "Uniforme entregue -> Tipo: [%s], Tamanho: [%s], Qtde: [%d]", d.uniformType, d.uniformSize, d.uniformAmount)));
+
                     }
+                    IO.println("-----------------------------------------------------------------------");
                 }
 
             } else {
@@ -122,7 +137,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
                 .stream()
                 .anyMatch(u -> u.uniformCode.equalsIgnoreCase(uniformCode) && u.uniformAmount > 0 && u.uniformAmount > uniformAmount);
       if (specificUniformIsAmount) {
-          IO.println(String.format(String.format(localeBr, "Produto de código: %s -> Saldo suficiente!", uniformCode)));
+          IO.println(String.format(String.format(localeBr, "Produto de código: %s -> Estoque suficiente para realizar a retirada!", uniformCode)));
       } else {
           IO.println(String.format(localeBr, "Produto de código %s -> Saldo insuficiente!", uniformCode));
       }
@@ -132,7 +147,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
     private void minusAmountSpecificUniform(String uniformCode, long uniformAmount) {
         uniformInventoryList
                 .stream()
-                .filter(u -> u.uniformCode.equalsIgnoreCase(uniformCode))
+                .filter(u -> u.uniformCode.equals(uniformCode))
                 .forEach(u -> u.uniformAmount = u.uniformAmount - uniformAmount);
     }
 
@@ -162,6 +177,13 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
         } else {
             IO.println("Não a uniformes no estoque -> Cadastre!");
         }
+    }
+
+    private void printSpecificUniformsUsed(long employeeEnrollmentNumber) {
+        deliveryUniformUsedList
+                .stream()
+                .filter(d -> d.employeeEnrollmentNumber == employeeEnrollmentNumber)
+                .forEach(d -> IO.println(d));
     }
 
     @Override

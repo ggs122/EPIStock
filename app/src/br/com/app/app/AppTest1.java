@@ -88,7 +88,7 @@ public class AppTest1 {
         uniformInventory1.addSpecificUniformInTheInventory(35, "25.060", 2, 1);
         uniformInventory1.addSpecificUniformInTheInventory(100,"25.061", 2, 2);
         uniformInventory1.printUniformInventory();
-        uniformInventory1.uniformDelivery(1001, "25.057", 1, 2, 1);
+        uniformInventory1.uniformDelivery(1001, "25.057", 1);
         uniformInventory1.printUniformInventory();
 
     }

@@ -315,13 +315,10 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         if (isEmployee) {
             if (!employeeList.isEmpty()) {
 
-                IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-                LOGGER.info(String.format(localeBr, "Funcionário da Matrícula: %d -> ENCONTRADO COM SUCESSO!", employeeEnrollmentNumber));
                 employeeList
                         .stream()
                         .filter(e -> e.getEmployeeEnrollmentNumber() == employeeEnrollmentNumber)
                         .forEach(e -> IO.println(String.format(localeBr, "Mat: %d | Nome: %s %s %s | Cargo: %s | Status %s", e.employeeEnrollmentNumber, e.employeeFirstName, e.employeeMiddleName, e.employeeLastname, e.jobe_title, e.is_Active)));
-                IO.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             } else {
                 IO.println("--------------------------------------------------");
                 IO.println("Não há clientes cadastrados no sistema -> Cadastre");

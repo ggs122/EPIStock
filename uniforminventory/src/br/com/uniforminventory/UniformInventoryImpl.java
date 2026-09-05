@@ -179,11 +179,24 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
         }
     }
 
-    private void printSpecificUniformsUsed(long employeeEnrollmentNumber) {
-        deliveryUniformUsedList
-                .stream()
-                .filter(d -> d.employeeEnrollmentNumber == employeeEnrollmentNumber)
-                .forEach(d -> IO.println(d));
+    @Override
+    public void printUniformsUsed() {
+
+        if (!deliveryUniformUsedList.isEmpty()) {
+            IO.println("---------------------------------------------------------------------------------------------------------------");
+            IO.println("> Lista de Uniformes Consumidos <");
+            deliveryUniformUsedList
+                    .forEach(d ->  {
+                        IO.println("---------------------------------------------------------------------------------------------------------------");
+                        employeeService
+                                .findEmployeeSomeDates(d.employeeEnrollmentNumber);
+                        IO.println(String.format(localeBr, "Tipo: %s | Tamanho: %s | Qtde: %d", d.uniformType, d.uniformSize, d.uniformAmount));
+                        IO.println("---------------------------------------------------------------------------------------------------------------");
+                        IO.println("---------------------------------------------------------------------------------------------------------------");
+                    });
+        } else {
+            IO.println("Não houve consumo de uniformes no estoque!");
+        }
     }
 
     @Override

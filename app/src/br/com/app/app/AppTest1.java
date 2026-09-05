@@ -90,6 +90,7 @@ public class AppTest1 {
         uniformInventory1.printUniformInventory();
         uniformInventory1.uniformDelivery(1001, "25.057", 1);
         uniformInventory1.printUniformInventory();
+        uniformInventory1.printUniformsUsed();
 
     }
 }

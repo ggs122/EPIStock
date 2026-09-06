@@ -169,7 +169,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
         }
     }
 
-    //TODO continuar a implementação depois!
+    @Override
     public void deleteSpecificUniform(String uniformCode) {
         if (!uniformInventoryList.isEmpty()) {
             uniformInventoryList
@@ -185,7 +185,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
 
         if (!deliveryUniformUsedList.isEmpty()) {
             IO.println("---------------------------------------------------------------------------------------------------------------");
-            IO.println("> Lista de Uniformes Consumidos <");
+            IO.println("> Lista de Uniformes Entregues <");
             deliveryUniformUsedList
                     .forEach(d ->  {
                         IO.println("---------------------------------------------------------------------------------------------------------------");

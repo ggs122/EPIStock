@@ -585,6 +585,7 @@ public class EmployeeImpl implements EmployeeInterface, Serializable {
         }
     }
 
+    //FIXME corrigir
     private boolean employeeLoginImpl(long myemployeeEnrollmentNumber, String myUser, String myPassword) {
         return loginService.loginOne(myemployeeEnrollmentNumber, myUser, myPassword);
     }

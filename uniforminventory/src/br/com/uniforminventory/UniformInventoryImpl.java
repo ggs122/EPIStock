@@ -169,6 +169,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
         }
     }
 
+    //TODO continuar a implementação depois!
     public void deleteSpecificUniform(String uniformCode) {
         if (!uniformInventoryList.isEmpty()) {
             uniformInventoryList

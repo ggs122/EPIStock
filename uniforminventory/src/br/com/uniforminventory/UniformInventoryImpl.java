@@ -175,7 +175,7 @@ public class UniformInventoryImpl implements UniformInventoryInterface {
                     .removeIf(u -> u.uniformCode.equals(uniformCode));
             IO.println(String.format(localeBr, "Todos os uniformes desse lote, com código %s -> Foram deletados com sucesso!", uniformCode));
         } else {
-            IO.println("Não a uniformes no estoque -> Cadastre!");
+            IO.println("Não há uniformes no estoque -> Cadastre!");
         }
     }
 
